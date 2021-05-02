@@ -8,36 +8,19 @@ const User = sequelize.define('User', {
         autoIncrement: true,
         primaryKey: true
     },
-    last_name: {
-        type: DataTypes.STRING(255),
-        allowNull: false
-    },
-    first_name: {
-        type: DataTypes.STRING(255),
-        allowNull: false
-    },
-    sexe: {
-        type: DataTypes.STRING(1)
-    },
-    pays: {
-        type: DataTypes.STRING(225),
-        defaultValue: 'France'
-    },
     email: {
         type: DataTypes.STRING(255),
-        allowNull: false
-    },
-    nickname: {
-        type: DataTypes.STRING(225),
         allowNull: false, unique: true
     },
+
     password: {
         type: DataTypes.INTEGER(225),
-        unique: true, allowNull: false
+        unique: true,
+        allowNull: false
     },
     isAdmin: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: false,
         defaultValue: false,
     }
 }, {
