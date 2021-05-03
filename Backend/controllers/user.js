@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.test = (req, res, next) => {
 
@@ -14,10 +15,6 @@ exports.test = (req, res, next) => {
     });
 }
 
-// exports.login =( req, res, next) => {
-
-
-// }
 exports.register = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
@@ -36,22 +33,18 @@ exports.register = (req, res, next) => {
 
 
 exports.login = (req, res, next) => {
-    console.log(req.body.email)
     User.findOne({ where: { email: req.body.email } })
         .then(user => {
-            console.log(user.email)
-            if (user === null) {
-                return res.status(401).json({ error: "Email don't exist " })
-            }
-            bcrypt.compare(user.password, req.body.password)
+            bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
+                        console.log(3);
                         return res.status(401).json({ message: 'your authantifications are not valid ' })
                     }
                     res.status(200).json({
                         userId: user.id,
                         token: jwt.sign(
-                            { userId: user._id },
+                            { userId: user.id },
                             process.env.TOKEN,
                             { expiresIn: '24h' }
                         )

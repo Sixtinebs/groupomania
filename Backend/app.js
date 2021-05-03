@@ -5,10 +5,13 @@ const sequelize = require('./config/db_sequelize');
 const app = express();
 const usersRoute = require('./routes/user');
 
+//.env
+require('dotenv').config()
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
-    res.send('OK !')
+  res.send('OK !')
 })
 
 //Connect Data Base
