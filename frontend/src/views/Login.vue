@@ -25,7 +25,8 @@
           :disabled='!validatedFields'
           class="button"
         >
-          Se connecter
+          <span v-if="status =='loading'"> En cour de connexion en cours ... </span>
+          <span v-else>Se connecter</span>
         </button>
       </div>
     </form>
@@ -34,6 +35,7 @@
 
 <script>
 //import { ref } from "vue";
+import { mapState } from "vuex";
 export default {
   data: function () {
     return {
@@ -61,17 +63,19 @@ export default {
         return false;
       }
     },
+    ...mapState(["status"]),
   },
   methods: {
     connectUser: function () {
+      const self = this;
       this.$store
         .dispatch("connectUser", {
           email: this.email,
           password: this.password,
         })
         .then(
-          function (response) {
-            console.log(response);
+          function () {
+            self.$router.push({ name: "Home" });
           },
           function (error) {
             console.log(error);

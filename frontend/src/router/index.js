@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
+import Home from '@/views/Home.vue';
 import NotFound from '@/views/NotFound.vue';
 
 
@@ -28,6 +29,14 @@ const routes = [
         component: NotFound,
         meta: {
             title: '404'
+        }
+    },
+    {
+        name: 'Home',
+        path: '/home',
+        component: Home,
+        mete: {
+            title: 'Home'
         }
     }
 ];
