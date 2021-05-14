@@ -1,13 +1,22 @@
 const express = require('express');
 //const db = require('./config/db');
 const sequelize = require('./config/db_sequelize');
+const cors = require('cors');
 
 const app = express();
 const usersRoute = require('./routes/user');
 const messagesRoute = require('./routes/message');
 
 //.env
-require('dotenv').config()
+require('dotenv').config();
+
+const corsOptions = {
+  origin: 'http://localhost:8080',
+  optionsSuccessStatus: 200,
+  allowedHeaders: 'Origin,X-Requested-With,Content,Accept,Content-Type,Authorization',
+  methods: 'GET,POST,PUT,DELETE,PATCH,OPTIONS'
+}
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

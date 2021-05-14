@@ -1,7 +1,7 @@
 <template>
   <section class="component-login">
     <h1>Connectez-vous !</h1>
-    <form @submit.prevent="addUser">
+    <form @submit.prevent="connectUser">
       <div>
         <label for="email">E-mail</label>
         <input
@@ -22,7 +22,6 @@
       </div>
       <div>
         <button
-          @click="connectUser"
           :disabled='!validatedFields'
           class="button"
         >
@@ -34,28 +33,26 @@
 </template>
 
 <script>
-import { ref } from "vue";
+//import { ref } from "vue";
 export default {
-  // data: function () {
+  data: function () {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  // setup() {
   //   let email = ref("");
   //   let password = ref("");
+  //   let connectUser = function () {
+  //     console.log(email.value, password.value);
+  //   };
   //   return {
   //     email,
   //     password,
+  //     connectUser,
   //   };
   // },
-  setup() {
-    let email = ref("");
-    let password = ref("");
-    let connectUser = function () {
-      console.log(email.value, password.value);
-    };
-    return {
-      email,
-      password,
-      connectUser,
-    };
-  },
   computed: {
     validatedFields: function () {
       if (this.email != "" && this.password != "") {
@@ -63,6 +60,23 @@ export default {
       } else {
         return false;
       }
+    },
+  },
+  methods: {
+    connectUser: function () {
+      this.$store
+        .dispatch("connectUser", {
+          email: this.email,
+          password: this.password,
+        })
+        .then(
+          function (response) {
+            console.log(response);
+          },
+          function (error) {
+            console.log(error);
+          }
+        );
     },
   },
 };

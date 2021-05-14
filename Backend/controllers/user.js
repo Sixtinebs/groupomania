@@ -16,13 +16,14 @@ exports.test = (req, res, next) => {
 }
 
 exports.register = (req, res, next) => {
-    console.log(req.body)
-    bcrypt.hash(req.body.password, 10)
+    const userInfo = req.body.userInfo;
+    bcrypt.hash(userInfo.password, 10)
         .then(hash => {
             const user = new User({
-                email: req.body.email,
+                email: userInfo.email,
                 password: hash,
-                isAdmin: req.body.isAdmin
+                //isAdmin: userInfo.isAdmin,
+                name: userInfo.name
             });
             user.save()
                 .then(() => res.status(201).json({ message: 'user has been created ! ' }))
@@ -34,9 +35,11 @@ exports.register = (req, res, next) => {
 
 
 exports.login = (req, res, next) => {
-    User.findOne({ where: { email: req.body.email } })
+    const userInfo = req.body.userInfo;
+    console.log(userInfo);
+    User.findOne({ where: { email: userInfo.email } })
         .then(user => {
-            bcrypt.compare(req.body.password, user.password)
+            bcrypt.compare(userInfo.password, user.password)
                 .then(valid => {
                     if (!valid) {
                         console.log(3);

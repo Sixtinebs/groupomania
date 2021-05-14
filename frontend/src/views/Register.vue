@@ -34,7 +34,7 @@
         <button
           class="button"
           :disabled='!validatedFields'
-          @click="addUser"
+          type="submit"
         >Créer votre compte</button>
       </div>
     </form>
@@ -43,23 +43,30 @@
 
 
 <script>
-import { ref } from "vue";
+//import { ref } from "vue";
 export default {
-  setup() {
-    let name = ref("");
-    let email = ref("");
-    let password = ref("");
-    let addUser = function () {
-      console.log(name.value, email.value, password.value);
-      name.value = "";
-      email.value = "";
-      password.value = "";
-    };
+  // setup() {
+  //   let name = ref("");
+  //   let email = ref("");
+  //   let password = ref("");
+  //   let addUser = function () {
+  //     console.log("setup", name.value, email.value, password.value);
+  //     name.value = "";
+  //     email.value = "";
+  //     password.value = "";
+  //   };
+  //   return {
+  //     name,
+  //     email,
+  //     password,
+  //     addUser,
+  //   };
+  // },
+  data: function () {
     return {
-      name,
-      email,
-      password,
-      addUser,
+      email: "",
+      name: "",
+      password: "",
     };
   },
   computed: {
@@ -69,6 +76,28 @@ export default {
       } else {
         return false;
       }
+    },
+  },
+  methods: {
+    addUser: function () {
+      this.$store
+        .dispatch("addUser", {
+          id: null,
+          email: this.email,
+          password: this.password,
+          name: this.name,
+          //isAdmin: false,
+          createdAt: null,
+          updatedAt: null,
+        })
+        .then(
+          function (response) {
+            console.log(response);
+          },
+          function (error) {
+            console.log(error);
+          }
+        );
     },
   },
 };
