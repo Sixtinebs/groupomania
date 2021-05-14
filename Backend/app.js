@@ -4,6 +4,7 @@ const sequelize = require('./config/db_sequelize');
 
 const app = express();
 const usersRoute = require('./routes/user');
+const messagesRoute = require('./routes/message');
 
 //.env
 require('dotenv').config()
@@ -39,5 +40,6 @@ try {
 
 // My Routes
 app.use('/groupomania/auth', usersRoute);
+app.use('/groupomania/message', messagesRoute);
 
 module.exports = app;
