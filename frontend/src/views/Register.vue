@@ -43,7 +43,8 @@
 
 
 <script>
-import { mapState } from "vuex";
+//import { mapState } from "vuex";
+
 export default {
   data: function () {
     return {
@@ -60,10 +61,11 @@ export default {
         return false;
       }
     },
-    ...mapState(["status"]),
+    //...mapState(["status"]),
   },
   methods: {
     addUser: function () {
+      //for access element this
       const self = this;
       //action trigger => dispatch
       this.$store

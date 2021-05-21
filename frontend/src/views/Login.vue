@@ -50,7 +50,7 @@ export default {
         return false;
       }
     },
-    ...mapState(["status"]),
+    ...mapState(["status", "user", "userInfo"]),
   },
   methods: {
     connectUser: function () {

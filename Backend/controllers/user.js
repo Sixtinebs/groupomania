@@ -7,12 +7,20 @@ exports.test = (req, res, next) => {
     //recherche de tous les utilisateurs
     User.findAll().then(users => {
         //on récupère ici un tableau "users" contenant une liste d'utilisateurs
-        console.log('Les utilisateurs ' + JSON.stringify(users));
         res.status(200).json({ users: users });
     }).catch(function (e) {
         //gestion erreur
         console.log(e);
     });
+}
+exports.getOneUser = (req, res, next) => {
+    console.log('req : ', req.body)
+    User.findOne({ where: { id: req.body.userId } })
+        .then(user => {
+            console.log('getOneUser', user)
+            res.status(200).json({ user: user })
+        })
+        .catch(error => res.status(404).json({ error }))
 }
 
 exports.register = (req, res, next) => {
@@ -26,7 +34,15 @@ exports.register = (req, res, next) => {
                 name: userInfo.name
             });
             user.save()
-                .then(() => res.status(201).json({ message: 'user has been created ! ' }))
+                .then(() => res.status(201).json({
+                    message: 'user has been created ! ',
+                    userId: user.id,
+                    token: jwt.sign(
+                        { userId: user.id },
+                        process.env.TOKEN,
+                        { expiresIn: '24h' }
+                    )
+                }))
                 .catch(error => res.status(500).json({ error }))
         })
         .catch(error => res.status(400).json({ error }));
