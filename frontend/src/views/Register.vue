@@ -43,25 +43,8 @@
 
 
 <script>
-//import { ref } from "vue";
+import { mapState } from "vuex";
 export default {
-  // setup() {
-  //   let name = ref("");
-  //   let email = ref("");
-  //   let password = ref("");
-  //   let addUser = function () {
-  //     console.log("setup", name.value, email.value, password.value);
-  //     name.value = "";
-  //     email.value = "";
-  //     password.value = "";
-  //   };
-  //   return {
-  //     name,
-  //     email,
-  //     password,
-  //     addUser,
-  //   };
-  // },
   data: function () {
     return {
       email: "",
@@ -77,9 +60,12 @@ export default {
         return false;
       }
     },
+    ...mapState(["status"]),
   },
   methods: {
     addUser: function () {
+      const self = this;
+      //action trigger => dispatch
       this.$store
         .dispatch("addUser", {
           id: null,
@@ -91,8 +77,8 @@ export default {
           updatedAt: null,
         })
         .then(
-          function (response) {
-            console.log(response);
+          function () {
+            self.$router.push({ name: "Home" });
           },
           function (error) {
             console.log(error);

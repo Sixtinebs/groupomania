@@ -6,48 +6,53 @@ const instance = axios.create({
 });
 
 const store = createStore({
+    //Current state
     state: {
         status: '',
-        userId: {
+        userInfo: {
             id: -1,
             token: ''
         }
     },
+    // function => change the state
     mutations: {
-        setStatus: function (state, status) {
+        SET_STATUS: function (state, status) {
             state.status = status;
         },
-        connectUser: function (state, user) {
-            state.user = user;
+        CONNECT_USER: function (state, userInfo) {
+            state.userInfo = userInfo;
         }
     },
+    //fonction => Trigger a mutations
     actions: {
         addUser: ({ commit }, userInfo) => {
-            commit('setStatus', 'loading')
+            //Commit a mutation
+            commit('SET_STATUS', 'loading')
             return new Promise((resolve, reject) => {
+                //set user info 
                 instance.post('/auth/register', { userInfo })
                     .then(function (response) {
                         resolve(response);
-                        commit('setStatus', 'created');
-                        commit('connectUser', response.data);
+                        commit('SET_STATUS', 'created');
+                        commit('CONNECT_USER', response.data);
                     })
                     .catch(function (error) {
                         reject(error);
-                        commit('setStatus', 'error_create');
+                        commit('SET_STATUS', 'error_create');
                     });
             })
         },
         connectUser: ({ commit }, userInfo) => {
-            commit('setStatus', 'loading');
+            commit('SET_STATUS', 'loading');
             return new Promise((resolve, reject) => {
                 instance.post('/auth/login', { userInfo })
                     .then(function (response) {
                         resolve(response);
-                        commit('setStatus', '');
+                        commit('SET_STATUS', '');
                     })
                     .catch(function (error) {
                         reject(error);
-                        commit('setStatus', 'error_connect');
+                        commit('SET_STATUS', 'error_connect');
                     });
             })
 

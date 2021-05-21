@@ -34,7 +34,6 @@
 </template>
 
 <script>
-//import { ref } from "vue";
 import { mapState } from "vuex";
 export default {
   data: function () {
@@ -43,18 +42,6 @@ export default {
       password: "",
     };
   },
-  // setup() {
-  //   let email = ref("");
-  //   let password = ref("");
-  //   let connectUser = function () {
-  //     console.log(email.value, password.value);
-  //   };
-  //   return {
-  //     email,
-  //     password,
-  //     connectUser,
-  //   };
-  // },
   computed: {
     validatedFields: function () {
       if (this.email != "" && this.password != "") {
