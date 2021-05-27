@@ -4,15 +4,29 @@ const axios = require('axios');
 const instance = axios.create({
     baseURL: 'http://localhost:3000/groupomania'
 });
+let userInfo = localStorage.getItem('user');
+if (!userInfo) {
+    userInfo = {
+        userId: -1,
+        token: ''
+    }
+} else {
+    try {
+        userInfo = JSON.parse(userInfo);
+        instance.defaults.headers.common['Authorization'] = userInfo.token;
+    } catch {
+        userInfo = {
+            userId: -1,
+            token: ''
+        }
+    }
 
+}
 const store = createStore({
     //Current state
     state: {
         status: '',
-        userInfo: {
-            userId: -1,
-            token: ''
-        },
+        userInfo: userInfo,
         user: {
             id: '',
             name: '',
@@ -28,13 +42,20 @@ const store = createStore({
         },
         CONNECT_USER: function (state, userInfo) {
             state.userInfo = userInfo;
+            localStorage.setItem('user', JSON.stringify(userInfo));
         },
         GET_USER: function (state, user) {
             state.user.id = user.id;
             state.user.name = user.name;
             state.user.email = user.email;
             state.user.isAdmin = user.isAdmin;
+
+        },
+        DISCONNECT_USER: function (state, userInfo) {
+            state.userInfo = userInfo;
+            localStorage.removeItem('user', JSON.stringify(userInfo));
         }
+
     },
     //fonction => Trigger a mutations
     actions: {
@@ -47,7 +68,6 @@ const store = createStore({
                     .then(function (response) {
                         resolve(response);
                         commit('SET_STATUS', 'created');
-                        console.log(response.data)
                         commit('CONNECT_USER', response.data);
                     })
                     .catch(function (error) {
@@ -87,6 +107,9 @@ const store = createStore({
                         commit('SET_STATUS', 'error_user');
                     })
             })
+        },
+        disconnectUser: ({ commit }, userInfo) => {
+            commit('DISCONNECT_USER', userInfo);
         }
     }
 });

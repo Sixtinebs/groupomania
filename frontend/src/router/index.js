@@ -4,7 +4,22 @@ import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Home from '@/views/Home.vue';
 import NotFound from '@/views/NotFound.vue';
+import test from '@/views/test.vue';
 
+
+function guardMyroute(to, from, next) {
+    var isAuthenticated = false;
+    if (localStorage.getItem('user'))
+        isAuthenticated = true;
+    else
+        isAuthenticated = false;
+    if (isAuthenticated) {
+        next();
+    }
+    else {
+        next('/');
+    }
+}
 
 const routes = [
     {
@@ -34,10 +49,17 @@ const routes = [
     {
         name: 'Home',
         path: '/home',
+        beforeEnter: guardMyroute,
         component: Home,
         meta: {
             title: 'Home'
         }
+    },
+    {
+        name: 'Test',
+        path: '/test',
+        beforeEnter: guardMyroute,
+        component: test
     }
 ];
 

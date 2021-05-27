@@ -61,7 +61,15 @@ export default {
         return false;
       }
     },
+
     //...mapState(["status"]),
+  },
+  mounted() {
+    const id = this.$store.state.userInfo.userId;
+    if (id !== -1) {
+      this.$router.push({ path: "/home" });
+      return;
+    }
   },
   methods: {
     addUser: function () {
