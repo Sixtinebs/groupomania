@@ -1,7 +1,7 @@
 const Message = require('../models/message');
+const User = require('../models/user');
 
 exports.createMessage = (req, res, next) => {
-    console.log('message', req.body);
     const message = req.body;
     Message.create(message)
         .then(() => { res.status(201).json({ message: 'Message crée !' }) })

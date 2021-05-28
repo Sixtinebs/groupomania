@@ -1,16 +1,33 @@
 <template>
-
-  <ul>
-    <li
-      v-for="item in messages"
-      :key="item.message"
-    >{{ item.message }}</li>
-  </ul>
+  <el-scrollbar height="400px">
+    <section>
+      <div
+        v-for="item in messages"
+        :key="item.message"
+        :class="[item.user_id == user.id ? myMessage :  notMyMessage]"
+      >
+        <!-- <el-col>
+          <div class="block">
+            <el-avatar
+              shape="square"
+              :size="50"
+              :src="squareUrl"
+            ></el-avatar>
+          </div>
+        </el-col> -->
+        <div>
+          <!-- <p v-bind="[item.user_id == user.id : user.name]">{{ user.name }}</p> -->
+          <p>{{ item.message }}</p>
+        </div>
+      </div>
+    </section>
+  </el-scrollbar>
   <div>{{ myTest() }}</div>
 </template>
 
 <script>
 const axios = require("axios");
+import { mapState } from "vuex";
 export default {
   props: {
     unTest: String,
@@ -19,26 +36,36 @@ export default {
     return {
       messages: [],
       test: [],
+      myMessage: "right",
+      notMyMessage: "left",
+      squareUrl:
+        "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
+      sizeList: ["large", "medium", "small"],
     };
+  },
+  computed: {
+    ...mapState(["user"]),
   },
   methods: {
     myTest() {
       this.test = this.unTest;
       return this.test;
     },
+    writer() {},
   },
   mounted() {
     axios
       .get("http://localhost:3000/groupomania/message")
-      .then(
-        (response) => (
-          (this.messages = response.data.message),
-          console.log(response.data.message[1])
-        )
-      );
+      .then((response) => (this.messages = response.data.message));
   },
 };
 </script>
 
-<style>
+<style scoped>
+.right {
+  text-align: end;
+}
+.left {
+  text-align: start;
+}
 </style>

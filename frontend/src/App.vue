@@ -1,18 +1,20 @@
 <template>
-  <h1>Groupomania</h1>
-  <nav>
+
+  <nav v-if="this.$store.state.userInfo.userId == -1">
+    <h1>Groupomania</h1>
     <router-link to="/">Se connecter </router-link> |
     <router-link to="/register">Créer un compte </router-link>
   </nav>
+  <Header v-else />
   <router-view />
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld.vue'
+import Header from "./views/Header";
 
 export default {
   name: "App",
-  components: {},
+  components: { Header },
 };
 </script>
 

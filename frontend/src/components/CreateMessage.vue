@@ -1,15 +1,22 @@
 <template>
-  <form @submit.prevent="sendMessage">
+  <form>
     <label for="message"></label>
-    <input
+    <el-input
       type="text"
+      :rows="2"
+      placeholder="Votre message"
       id="message"
       name="message"
       minlength="1"
       required
       v-model="message"
     >
-    <button>Envoyer</button>
+    </el-input>
+    <el-button
+      type="success"
+      icon="el-icon-check"
+      @click="sendMessage"
+    ></el-button>
   </form>
 
 </template>
@@ -49,11 +56,27 @@ export default {
         })
         .then((response) => console.log(response.data.message));
       this.message = "";
-      this.updateMessage();
+      //this.updateMessage();
+      //$el.$forceUpdate();
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
+form {
+  display: flex;
+  vertical-align: bottom;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 10px;
+}
+.el-input__inner {
+  border-radius: 4px 0 0 4px;
+}
+.el-button {
+  border-radius: 0 4px 4px 0;
+}
 </style>

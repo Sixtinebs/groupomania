@@ -1,33 +1,50 @@
 <template>
   <section class="component-login">
     <h1>Connectez-vous !</h1>
-    <form @submit.prevent="connectUser">
+    <form>
       <div>
         <label for="email">E-mail</label>
-        <input
+        <el-input
           type="email"
           id="email"
           name="email"
+          placeholder="Votre email"
           v-model="email"
-        />
+        ></el-input>
       </div>
       <div>
         <label for="password">Mot de Passe</label>
-        <input
+        <el-input
           type="passord"
           id="password"
           name="password"
+          placeholder="Mot de passe"
           v-model="password"
-        />
+          show-password
+        ></el-input>
       </div>
+
       <div>
-        <button
-          :disabled='!validatedFields'
+        <el-button
+          v-if="disabled=!validatedFields"
+          type="primary"
+          disabled
+          round
+        >Se connecter</el-button>
+        <el-button
+          type="primary"
+          v-else-if="status =='loading'"
+          :loading="true"
+        >Chargement</el-button>
+        <el-button
+          v-else
+          type="primary"
           class="button"
+          round
+          @click="connectUser"
         >
-          <span v-if="status =='loading'"> En cour de connexion en cours ... </span>
-          <span v-else>Se connecter</span>
-        </button>
+          Se connecter
+        </el-button>
       </div>
     </form>
   </section>
@@ -35,11 +52,12 @@
 
 <script>
 import { mapState } from "vuex";
-export default {
-  data: function () {
+import { defineComponent, ref } from "vue";
+export default defineComponent({
+  setup() {
     return {
-      email: "",
-      password: "",
+      password: ref(""),
+      email: ref(""),
     };
   },
   computed: {
@@ -77,7 +95,7 @@ export default {
         );
     },
   },
-};
+});
 </script>
 
 <style>

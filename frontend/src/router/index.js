@@ -34,6 +34,7 @@ const routes = [
         name: 'Register',
         path: '/register',
         component: Register,
+        afterEnter: guardMyroute,
         meta: {
             title: 'Signup'
         }

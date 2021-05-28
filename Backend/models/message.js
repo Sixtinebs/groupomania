@@ -1,6 +1,6 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db_sequelize');
-//const User = require('../models/user');
+const User = require('../models/user');
 
 const Message = sequelize.define('Message', {
     id: {
@@ -24,7 +24,8 @@ const Message = sequelize.define('Message', {
     tableName: 'messages',
 
 });
-
+// User.hasMany(Message);
+// Message.belongsTo(User, { foreignKey: 'fk_messages' });
 // `sequelize.define` also returns the model
 console.log(Message === sequelize.models.Message); // true
 //Message.hasMany(User);
