@@ -22,11 +22,11 @@
 </template>
 
 <script>
-const axios = require("axios");
+import messageService from "../service/messageService";
 export default {
-  props: {
-    updateMessages: Object,
-  },
+  // props: {
+  //   updateMessages: Object,
+  // },
   data() {
     return {
       message: "",
@@ -34,27 +34,29 @@ export default {
     };
   },
   methods: {
-    updateMessage: function () {
-      axios
-        .get("http://localhost:3000/groupomania/message")
-        .then(
-          (response) => (
-            (this.messages = response.data.message),
-            console.log("new req", response.data.message)
-          )
-        );
-    },
-    sendMessage: function () {
+    // updateMessage: function () {
+    //   axios
+    //     .get("http://localhost:3000/groupomania/message")
+    //     .then(
+    //       (response) => (
+    //         (this.messages = response.data.message),
+    //         console.log("new req", response.data.message)
+    //       )
+    //     );
+    // },
+    sendMessage() {
       console.log(this.message);
-      axios
-        .post("http://localhost:3000/groupomania/message", {
-          id: null,
-          user_id: this.$store.state.userInfo.userId,
-          message: this.message,
-          createdAt: null,
-          updatedAt: null,
-        })
-        .then((response) => console.log(response.data.message));
+      let infoMessage = {
+        id: null,
+        user_id: this.$store.state.userInfo.userId,
+        message: this.message,
+        createdAt: null,
+        updatedAt: null,
+      };
+      messageService
+        .createMessage(infoMessage)
+        .then((response) => console.log(response.data.message))
+        .catch((error) => console.log(error));
       this.message = "";
       //this.updateMessage();
       //$el.$forceUpdate();

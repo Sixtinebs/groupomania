@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db_sequelize');
-const User = require('../models/user');
+// const User = require('../models/user');
 
 const Message = sequelize.define('Message', {
     id: {
@@ -12,7 +12,7 @@ const Message = sequelize.define('Message', {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         // references: {
-        //     model: 'users',
+        //     model: User,
         //     key: 'id'
         // }
     },
@@ -22,12 +22,21 @@ const Message = sequelize.define('Message', {
     }
 }, {
     tableName: 'messages',
+    // classMethods: {
+    //     associate: function (models) {
+    //         models.Message.belongsTo(models.User, { foreignKey: 'fk_messages', as: 'user' });
+    //     }
+    // }
 
 });
-// User.hasMany(Message);
+// Message.associate = (models) => {
+//     Message.belongsTo(models.User, { foreignKey: 'fk_messages', as: 'user' });
+// }
+
+// User.hasMany(Message, { foreignKey: 'fk_messages' });
 // Message.belongsTo(User, { foreignKey: 'fk_messages' });
 // `sequelize.define` also returns the model
-console.log(Message === sequelize.models.Message); // true
+Message === sequelize.models.Message; // true
 //Message.hasMany(User);
 module.exports = Message;
 

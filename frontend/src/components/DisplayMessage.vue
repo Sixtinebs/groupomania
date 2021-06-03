@@ -26,7 +26,7 @@
 </template>
 
 <script>
-const axios = require("axios");
+import messageService from "../service/messageService";
 import { mapState } from "vuex";
 export default {
   props: {
@@ -53,10 +53,15 @@ export default {
     },
     writer() {},
   },
-  mounted() {
-    axios
-      .get("http://localhost:3000/groupomania/message")
-      .then((response) => (this.messages = response.data.message));
+  created() {
+    messageService
+      .getAll()
+      .then((response) => {
+        this.messages = response.data.message;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>
