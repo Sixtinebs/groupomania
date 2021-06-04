@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db_sequelize');
-// const User = require('../models/user');
+const User = require('../models/user');
 
 const Message = sequelize.define('Message', {
     id: {
@@ -27,11 +27,12 @@ const Message = sequelize.define('Message', {
     //         models.Message.belongsTo(models.User, { foreignKey: 'fk_messages', as: 'user' });
     //     }
     // }
+    associate = (models) => {
+        Message.belongsTo(models.User, { foreignKey: 'fk_messages', as: 'user' });
+    }
 
 });
-// Message.associate = (models) => {
-//     Message.belongsTo(models.User, { foreignKey: 'fk_messages', as: 'user' });
-// }
+
 
 // User.hasMany(Message, { foreignKey: 'fk_messages' });
 // Message.belongsTo(User, { foreignKey: 'fk_messages' });

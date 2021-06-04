@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db_sequelize');
-// const Message = require('../models/message');
+//const Message = require('../models/message');
+const models = require('../models');
 
 const User = sequelize.define('User', {
     // Model attributes are defined here
@@ -34,6 +35,11 @@ const User = sequelize.define('User', {
     //         models.User.hasMany(models.Message, { foreignKey: 'fk_messages', as: 'message' });
     //     }
     // }
+    classMethods: {
+        associate: function (models) {
+            User.hasMany(models.Message);
+        }
+    }
 
 
 });

@@ -51,17 +51,20 @@ export default {
       this.test = this.unTest;
       return this.test;
     },
-    writer() {},
+    getAllMessages() {
+      messageService
+        .getAll()
+        .then((response) => {
+          this.messages = response.data.message;
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   created() {
-    messageService
-      .getAll()
-      .then((response) => {
-        this.messages = response.data.message;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.getAllMessages();
   },
 };
 </script>

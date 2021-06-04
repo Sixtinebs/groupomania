@@ -10,11 +10,12 @@ exports.createMessage = (req, res, next) => {
 
 exports.getAllMessages = (req, res, next) => {
     Message.findAll(
-        // {
-        // include: {
-        //     model: User,
-        //     attributes: ['id', 'name']
-        // }}
+        {
+            include: [{
+                model: User,
+                attributes: ['id', 'name']
+            }]
+        }
     ).then(msg => {
         //on récupère ici un tableau "users" contenant une liste d'utilisateurs
         res.status(200).json({ message: msg });

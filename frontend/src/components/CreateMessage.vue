@@ -24,26 +24,24 @@
 <script>
 import messageService from "../service/messageService";
 export default {
-  // props: {
-  //   updateMessages: Object,
-  // },
   data() {
     return {
       message: "",
-      messages: [],
+      messagesUpdates: [],
     };
   },
+
   methods: {
-    // updateMessage: function () {
-    //   axios
-    //     .get("http://localhost:3000/groupomania/message")
-    //     .then(
-    //       (response) => (
-    //         (this.messages = response.data.message),
-    //         console.log("new req", response.data.message)
-    //       )
-    //     );
-    // },
+    updateMessage: function () {
+      messageService
+        .getAll()
+        .then(
+          (response) => (
+            (this.messagesUpdates = response.data.message),
+            console.log("new req", response.data.message)
+          )
+        );
+    },
     sendMessage() {
       console.log(this.message);
       let infoMessage = {
@@ -58,8 +56,8 @@ export default {
         .then((response) => console.log(response.data.message))
         .catch((error) => console.log(error));
       this.message = "";
-      //this.updateMessage();
-      //$el.$forceUpdate();
+      window.location.reload();
+      //this.getAllMessages();
     },
   },
 };
