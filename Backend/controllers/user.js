@@ -1,11 +1,11 @@
-const User = require('../models/user');
+const db = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.test = (req, res, next) => {
 
     //recherche de tous les utilisateurs
-    User.findAll().then(users => {
+    db.User.findAll({}).then(users => {
         //on récupère ici un tableau "users" contenant une liste d'utilisateurs
         res.status(200).json({ users: users });
     }).catch(function (e) {
@@ -15,7 +15,7 @@ exports.test = (req, res, next) => {
 }
 exports.getOneUser = (req, res, next) => {
     console.log('req : ', req.body)
-    User.findOne({ where: { id: req.body.userId } })
+    db.User.findOne({ where: { id: req.body.userId } })
         .then(user => {
             console.log('getOneUser', user)
             res.status(200).json({ user: user })
@@ -53,7 +53,7 @@ exports.register = (req, res, next) => {
 exports.login = (req, res, next) => {
     const userInfo = req.body.userInfo;
     console.log(userInfo);
-    User.findOne({ where: { email: userInfo.email } })
+    db.User.findOne({ where: { email: userInfo.email } })
         .then(user => {
             bcrypt.compare(userInfo.password, user.password)
                 .then(valid => {

@@ -1,43 +1,42 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db_sequelize');
-const User = require('../models/user');
-
-const Message = sequelize.define('Message', {
-    id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    user_id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        // references: {
-        //     model: User,
-        //     key: 'id'
-        // }
-    },
-    message: {
-        type: DataTypes.TEXT(65000),
-        allowNull: false,
-    }
-}, {
-    tableName: 'messages',
-    // classMethods: {
-    //     associate: function (models) {
-    //         models.Message.belongsTo(models.User, { foreignKey: 'fk_messages', as: 'user' });
-    //     }
-    // }
-    associate = (models) => {
-        Message.belongsTo(models.User, { foreignKey: 'fk_messages', as: 'user' });
-    }
-
-});
-
-
-// User.hasMany(Message, { foreignKey: 'fk_messages' });
-// Message.belongsTo(User, { foreignKey: 'fk_messages' });
-// `sequelize.define` also returns the model
-Message === sequelize.models.Message; // true
-//Message.hasMany(User);
-module.exports = Message;
-
+'use strict';
+const {
+    Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+    class Message extends Model {
+        /**
+         * Helper method for defining associations.
+         * This method is not a part of Sequelize lifecycle.
+         * The `models/index` file will call this method automatically.
+         */
+        static associate(models) {
+            models.Message.belongsTo(models.User, { foreignKey: 'user_id' });
+        }
+    };
+    Message.init({
+        // id: DataTypes.INTEGER,
+        // user_id: DataTypes.INTEGER,
+        // message: DataTypes.TEXT
+        id: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        user_id: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: false,
+            references: {
+                model: 'User',
+                key: 'id'
+            }
+        },
+        message: {
+            type: DataTypes.TEXT(65000),
+            allowNull: false,
+        }
+    }, {
+        sequelize,
+        modelName: 'Message',
+    });
+    return Message;
+};
