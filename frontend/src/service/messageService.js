@@ -11,4 +11,7 @@ export default {
     createMessage(data) {
         return axios.post('http://localhost:3000/groupomania/message', data);
     },
+    deleteMessage(id) {
+        return axios.delete('http://localhost:3000/groupomania/message', { params: { id } })
+    }
 }

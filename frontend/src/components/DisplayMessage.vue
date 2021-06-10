@@ -18,6 +18,19 @@
         <div>
           <p class="user-name">{{ item.User.name }}</p>
           <p>{{ item.message }}</p>
+          <el-button
+            v-if="item.user_id == user.id"
+            type="primary"
+            icon="el-icon-edit"
+            circle
+          ></el-button>
+          <el-button
+            v-if="item.user_id == user.id"
+            type="danger"
+            icon="el-icon-delete"
+            circle
+            @click="deleteMessage(item.id, item)"
+          ></el-button>
         </div>
       </div>
     </section>
@@ -56,13 +69,23 @@ export default {
       messageService
         .getAll()
         .then((response) => {
+          console.log("ici");
           this.messages = response.data.message;
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    deleteMessage(id, item) {
+      console.log(id);
+      messageService
+        .deleteMessage(id)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
+      this.messages.splice(this.messages.indexOf(item), 1);
+    },
   },
+
   created() {
     this.getAllMessages();
   },
