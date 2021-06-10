@@ -34,7 +34,13 @@ exports.getOneMessage = (req, res, next) => {
         .catch(error => res.status(404).json({ error }))
 }
 exports.modifyMessage = (req, res, next) => {
-
+    console.log(req.body)
+    const newMessage = { message: req.body.message }
+    db.Message.update(newMessage, { where: { id: req.query.id } })
+        .then(() => {
+            res.status(200).json({ message: 'Message modifié' })
+        })
+        .catch(error => console.log(error))
 }
 
 exports.deleteMessage = (req, res, next) => {
