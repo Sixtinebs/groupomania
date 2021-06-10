@@ -1,22 +1,14 @@
 <template>
   <h1>Bonjour {{ user.name }} !</h1>
-  <DisplayMessage v-bind:un-test="test" />
-  <CreateMessage v-bind:update-messages="updateMessages" />
-  {{ updateMessages }}
+  <DisplayMessage />
 </template>
 <script>
 import { mapState } from "vuex";
 import DisplayMessage from "../components/DisplayMessage";
-import CreateMessage from "../components/CreateMessage";
 
 export default {
-  props: ["updateMessages"],
-  data: () => ({
-    test: "mon test",
-  }),
   components: {
     DisplayMessage,
-    CreateMessage,
   },
   computed: {
     ...mapState(["status", "user", "userInfo"]),

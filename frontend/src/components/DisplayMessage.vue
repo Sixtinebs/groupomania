@@ -22,20 +22,22 @@
       </div>
     </section>
   </el-scrollbar>
-  <div>{{ myTest() }}</div>
+  <CreateMessage @newMessage="updateNewMessage" />
+
 </template>
 
 <script>
 import messageService from "../service/messageService";
 import { mapState } from "vuex";
+import CreateMessage from "./CreateMessage.vue";
 export default {
-  props: {
-    unTest: String,
+  components: {
+    CreateMessage,
   },
   data() {
     return {
       messages: [],
-      test: [],
+      test: "",
       myMessage: "right",
       notMyMessage: "left",
       squareUrl:
@@ -47,9 +49,8 @@ export default {
     ...mapState(["user"]),
   },
   methods: {
-    myTest() {
-      this.test = this.unTest;
-      return this.test;
+    updateNewMessage(messages) {
+      this.messages = messages;
     },
     getAllMessages() {
       messageService

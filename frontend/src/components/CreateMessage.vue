@@ -27,20 +27,19 @@ export default {
   data() {
     return {
       message: "",
-      messagesUpdates: [],
+      newMessages: [],
     };
   },
 
   methods: {
-    updateMessage: function () {
+    updateMessage() {
       messageService
         .getAll()
-        .then(
-          (response) => (
-            (this.messagesUpdates = response.data.message),
-            console.log("new req", response.data.message)
-          )
-        );
+        .then((response) => {
+          this.newMessages = response.data.message;
+          this.$emit("newMessage", this.newMessages);
+        })
+        .catch((error) => console.log(error));
     },
     sendMessage() {
       let infoMessage = {
@@ -55,8 +54,12 @@ export default {
         .then((response) => console.log(response.data.message))
         .catch((error) => console.log(error));
       this.message = "";
-      window.location.reload();
-      //this.getAllMessages();
+      //window.location.reload();
+      //setTimeout(this.updateMessage(), 2000);
+      this.updateMessage();
+    },
+    sendMessageToParent() {
+      this.$emit("messageFromChild", this.test);
     },
   },
 };
