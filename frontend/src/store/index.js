@@ -5,6 +5,7 @@ import userServices from '../service/userService';
 const instance = axios.create({
     baseURL: 'http://localhost:3000/groupomania'
 });
+// if user is connect
 let userInfo = localStorage.getItem('user');
 if (!userInfo) {
     userInfo = {
@@ -65,7 +66,6 @@ const store = createStore({
             commit('SET_STATUS', 'loading')
             return new Promise((resolve, reject) => {
                 //set user info 
-                //instance.post('/auth/register', { userInfo })
                 userServices.createUser({ userInfo })
                     .then(function (response) {
                         resolve(response);
@@ -81,7 +81,6 @@ const store = createStore({
         connectUser: ({ commit }, userInfo) => {
             commit('SET_STATUS', 'loading');
             return new Promise((resolve, reject) => {
-                // instance.post('/auth/login', { userInfo })
                 userServices.postOneUser({ userInfo })
                     .then(function (response) {
                         resolve(response);
@@ -95,10 +94,10 @@ const store = createStore({
             })
 
         },
-        getUser: ({ commit }, id) => {
+        getUser: ({ commit }, userId) => {
             return new Promise((resolve, reject) => {
-                //instance.post('/auth/user', { userId: id })
-                userServices.getUser({ userId: id })
+                //instance.get('/auth/user', { userId: id })
+                userServices.getUser(userId)
                     .then(function (response) {
                         resolve(response);
                         commit('SET_STATUS', 'connected');

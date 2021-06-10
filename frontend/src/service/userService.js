@@ -1,11 +1,12 @@
 const axios = require("axios");
 
-// const BASE_URL = axios.create({
-//     baseURL: 'http://localhost:3000/groupomania/auth'
-// });
+
 export default {
-    getUser(id) {
-        return axios.post('http://localhost:3000/groupomania/auth/user', id);
+    getUser(userId) {
+        return axios.get('http://localhost:3000/groupomania/auth/user', { params: { userId } });
+    },
+    getAllUsers() {
+        return axios.get('http://localhost:3000/groupomania/auth/users')
     },
     createUser(data) {
         return axios.post('http://localhost:3000/groupomania/auth/register', data);

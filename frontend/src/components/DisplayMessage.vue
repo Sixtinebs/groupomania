@@ -16,7 +16,7 @@
           </div>
         </el-col> -->
         <div>
-          <!-- <p v-bind="[item.user_id == user.id : user.name]">{{ user.name }}</p> -->
+          <p class="user-name">{{ item.User.name }}</p>
           <p>{{ item.message }}</p>
         </div>
       </div>
@@ -56,7 +56,6 @@ export default {
         .getAll()
         .then((response) => {
           this.messages = response.data.message;
-          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -75,5 +74,8 @@ export default {
 }
 .left {
   text-align: start;
+}
+.user-name {
+  font-weight: bold;
 }
 </style>

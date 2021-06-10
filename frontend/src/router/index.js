@@ -4,7 +4,7 @@ import Login from '@/views/Login.vue';
 import Register from '@/views/Register.vue';
 import Home from '@/views/Home.vue';
 import NotFound from '@/views/NotFound.vue';
-import test from '@/views/test.vue';
+import Profil from '@/views/Profil.vue';
 
 
 function guardMyroute(to, from, next) {
@@ -57,10 +57,13 @@ const routes = [
         }
     },
     {
-        name: 'Test',
-        path: '/test',
+        name: 'Profil',
+        path: '/profil',
         beforeEnter: guardMyroute,
-        component: test
+        component: Profil,
+        meta: {
+            title: 'Profil'
+        }
     }
 ];
 

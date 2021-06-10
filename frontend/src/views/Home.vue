@@ -23,6 +23,7 @@ export default {
   },
   mounted() {
     const id = this.$store.state.userInfo.userId;
+    console.log(id);
     this.$store.dispatch("getUser", id);
   },
 };

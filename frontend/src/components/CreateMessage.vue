@@ -43,7 +43,6 @@ export default {
         );
     },
     sendMessage() {
-      console.log(this.message);
       let infoMessage = {
         id: null,
         user_id: this.$store.state.userInfo.userId,

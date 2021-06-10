@@ -8,9 +8,16 @@
     text-color="#fff"
     active-text-color="#ffd04b"
   >
-    <el-menu-item index="1">Mon profil</el-menu-item>
-
-    <el-menu-item index="3"><a v-on:click="disconnection">Déconnexion</a></el-menu-item>
+    <el-menu-item index="1">
+      <router-link to="/">Home </router-link>
+    </el-menu-item>
+    <el-menu-item index="2">
+      <router-link to="/profil">Mon Profil</router-link>
+    </el-menu-item>
+    <el-menu-item
+      index="3"
+      class="disconnection"
+    ><a v-on:click="disconnection">Déconnexion</a></el-menu-item>
 
   </el-menu>
 </template>
@@ -41,5 +48,11 @@ export default {
 <style scoped>
 .el-menu {
   margin-top: -60px;
+}
+a {
+  text-decoration: none;
+}
+.el-menu .disconnection {
+  float: right;
 }
 </style>

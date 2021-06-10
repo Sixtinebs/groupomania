@@ -2,7 +2,7 @@ const db = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-exports.test = (req, res, next) => {
+exports.getAllUser = (req, res, next) => {
 
     //recherche de tous les utilisateurs
     db.User.findAll({}).then(users => {
@@ -14,10 +14,8 @@ exports.test = (req, res, next) => {
     });
 }
 exports.getOneUser = (req, res, next) => {
-    console.log('req : ', req.body)
-    db.User.findOne({ where: { id: req.body.userId } })
+    db.User.findOne({ where: { id: req.query.userId } })
         .then(user => {
-            console.log('getOneUser', user)
             res.status(200).json({ user: user })
         })
         .catch(error => res.status(404).json({ error }))
@@ -52,7 +50,7 @@ exports.register = (req, res, next) => {
 
 exports.login = (req, res, next) => {
     const userInfo = req.body.userInfo;
-    console.log(userInfo);
+
     db.User.findOne({ where: { email: userInfo.email } })
         .then(user => {
             bcrypt.compare(userInfo.password, user.password)
