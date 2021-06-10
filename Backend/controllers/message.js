@@ -25,11 +25,22 @@ exports.getAllMessages = (req, res, next) => {
         console.log(e);
     });
 }
-
-exports.modifyMessage = (res, req, next) => {
+exports.getOneMessage = (req, res, next) => {
+    console.log(req)
+    db.Message.findOne({ where: { id: req.query.id } })
+        .then(message => {
+            res.status(200).json({ message: message })
+        })
+        .catch(error => res.status(404).json({ error }))
+}
+exports.modifyMessage = (req, res, next) => {
 
 }
 
-exports.deleteMessage = (res, req, next) => {
-
+exports.deleteMessage = (req, res, next) => {
+    db.Message.destroy({ where: { id: req.query.id } })
+        .then(() => {
+            res.status(204).json({ message: 'Message supprimé ' })
+        })
+        .catch(error => res.status(404).json({ error }))
 }
