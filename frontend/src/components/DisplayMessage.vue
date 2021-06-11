@@ -109,9 +109,9 @@ export default {
       }
     },
     deleteMessage(id, item) {
-      console.log(id);
+      let token = this.$store.state.userInfo.token;
       messageService
-        .deleteMessage(id)
+        .deleteMessage(id, token)
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
       this.messages.splice(this.messages.indexOf(item), 1);

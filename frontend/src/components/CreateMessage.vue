@@ -41,8 +41,9 @@ export default {
         createdAt: null,
         updatedAt: null,
       };
+      let token = this.$store.state.userInfo.token;
       messageService
-        .createMessage(infoMessage)
+        .createMessage(infoMessage, token)
         .then((response) => console.log(response.data.message))
         .catch((error) => console.log(error));
       this.message = "";

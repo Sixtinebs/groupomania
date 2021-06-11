@@ -29,9 +29,10 @@ export default defineComponent({
     messageId: Number,
   },
   methods: {
-    sendUpdateMessage(id, message) {
+    sendUpdateMessage: function (id, message) {
+      let token = this.$store.state.userInfo.token;
       messageService
-        .updateMessage(id, message)
+        .updateMessage(id, message, token)
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
       console.log("message", message);

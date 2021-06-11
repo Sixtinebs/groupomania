@@ -4,13 +4,13 @@ export default {
     getAll() {
         return axios.get('http://localhost:3000/groupomania/message');
     },
-    createMessage(data) {
-        return axios.post('http://localhost:3000/groupomania/message', data);
+    createMessage(data, token) {
+        return axios.post('http://localhost:3000/groupomania/message', data, { 'headers': { 'Authorization': 'Bearer ' + token } });
     },
-    updateMessage(id, message) {
-        return axios.put(`http://localhost:3000/groupomania/message?id=${id}`, { message: message });
+    updateMessage(id, message, token) {
+        return axios.put(`http://localhost:3000/groupomania/message?id=${id}`, { message: message }, { 'headers': { 'Authorization': 'Bearer ' + token } });
     },
-    deleteMessage(id) {
-        return axios.delete('http://localhost:3000/groupomania/message', { params: { id } })
+    deleteMessage(id, token) {
+        return axios.delete(`http://localhost:3000/groupomania/message?id=${id}`, { 'headers': { 'Authorization': 'Bearer ' + token } })
     }
 }
