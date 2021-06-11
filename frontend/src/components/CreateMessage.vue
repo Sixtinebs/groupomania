@@ -58,9 +58,6 @@ export default {
       //setTimeout(this.updateMessage(), 2000);
       this.updateMessage();
     },
-    sendMessageToParent() {
-      this.$emit("messageFromChild", this.test);
-    },
   },
 };
 </script>

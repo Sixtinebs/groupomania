@@ -6,23 +6,23 @@
         :key="item.message"
         :class="[item.user_id == user.id ? myMessage :  notMyMessage]"
       >
-        <!-- <el-col>
-          <div class="block">
-            <el-avatar
-              shape="square"
-              :size="50"
-              :src="squareUrl"
-            ></el-avatar>
-          </div>
-        </el-col> -->
         <div>
           <p class="user-name">{{ item.User.name }}</p>
-          <p>{{ item.message }}</p>
+          <p class="message-user">{{ item.message }}</p>
+          <p>{{modifyOneMessage()}}</p>
+          <UpdateMessage
+            class="input-update-message"
+            v-bind:style="{display:computedDisplay}"
+            v-if="currentUpdateMessage == item.id"
+            :messageId="currentUpdateMessage"
+            @updateMessage="modifyOneMessage"
+          />
           <el-button
             v-if="item.user_id == user.id"
             type="primary"
             icon="el-icon-edit"
             circle
+            @click="updateMessage(item.id)"
           ></el-button>
           <el-button
             v-if="item.user_id == user.id"
@@ -43,9 +43,11 @@
 import messageService from "../service/messageService";
 import { mapState } from "vuex";
 import CreateMessage from "./CreateMessage.vue";
+import UpdateMessage from "./UpdateMessage.vue";
 export default {
   components: {
     CreateMessage,
+    UpdateMessage,
   },
   data() {
     return {
@@ -53,17 +55,26 @@ export default {
       test: "",
       myMessage: "right",
       notMyMessage: "left",
-      squareUrl:
-        "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
-      sizeList: ["large", "medium", "small"],
+      display: "none",
+      currentUpdateMessage: null,
     };
   },
   computed: {
     ...mapState(["user"]),
+    //return data css display
+    computedDisplay: function () {
+      return this.display;
+    },
   },
   methods: {
+    // Update when create a new message
     updateNewMessage(messages) {
       this.messages = messages;
+    },
+    //update when edit a message
+    modifyOneMessage(message) {
+      //console.log("msg", message);
+      return message;
     },
     getAllMessages() {
       messageService
@@ -75,6 +86,21 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    updateMessage(id) {
+      // Find a good message for update
+      for (const item of this.messages) {
+        if (item.id == id) {
+          //Change variable
+          this.currentUpdateMessage = id;
+          //Hide or show input
+          if (this.display == "none") {
+            this.display = "inline-block";
+          } else {
+            this.display = "none";
+          }
+        }
+      }
     },
     deleteMessage(id, item) {
       console.log(id);
@@ -101,5 +127,8 @@ export default {
 }
 .user-name {
   font-weight: bold;
+}
+.input-update-message {
+  display: none;
 }
 </style>
