@@ -24,6 +24,7 @@
 <script>
 import messageService from "../service/messageService";
 export default {
+  emits: ["reloadMessage"],
   data() {
     return {
       message: "",
@@ -32,15 +33,6 @@ export default {
   },
 
   methods: {
-    updateMessage() {
-      messageService
-        .getAll()
-        .then((response) => {
-          this.newMessages = response.data.message;
-          this.$emit("newMessage", this.newMessages);
-        })
-        .catch((error) => console.log(error));
-    },
     sendMessage() {
       let infoMessage = {
         id: null,
@@ -56,7 +48,7 @@ export default {
       this.message = "";
       //window.location.reload();
       //setTimeout(this.updateMessage(), 2000);
-      this.updateMessage();
+      this.$emit("reloadMessage");
     },
   },
 };

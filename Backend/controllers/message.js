@@ -26,7 +26,6 @@ exports.getAllMessages = (req, res, next) => {
     });
 }
 exports.getOneMessage = (req, res, next) => {
-    console.log(req)
     db.Message.findOne({ where: { id: req.query.id } })
         .then(message => {
             res.status(200).json({ message: message })
@@ -34,7 +33,6 @@ exports.getOneMessage = (req, res, next) => {
         .catch(error => res.status(404).json({ error }))
 }
 exports.modifyMessage = (req, res, next) => {
-    console.log(req.body)
     const newMessage = { message: req.body.message }
     db.Message.update(newMessage, { where: { id: req.query.id } })
         .then(() => {

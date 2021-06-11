@@ -8,14 +8,16 @@
       >
         <div>
           <p class="user-name">{{ item.User.name }}</p>
-          <p class="message-user">{{ item.message }}</p>
-          <p>{{modifyOneMessage()}}</p>
+          <p
+            class="message-user"
+            :id="'id-'+item.id"
+          >{{ item.message }}</p>
           <UpdateMessage
             class="input-update-message"
             v-bind:style="{display:computedDisplay}"
             v-if="currentUpdateMessage == item.id"
             :messageId="currentUpdateMessage"
-            @updateMessage="modifyOneMessage"
+            @update-message="modifyOneMessage"
           />
           <el-button
             v-if="item.user_id == user.id"
@@ -35,7 +37,7 @@
       </div>
     </section>
   </el-scrollbar>
-  <CreateMessage @newMessage="updateNewMessage" />
+  <CreateMessage @reload-message="getAllMessages" />
 
 </template>
 
@@ -68,15 +70,19 @@ export default {
   },
   methods: {
     // Update when create a new message
-    updateNewMessage(messages) {
-      this.messages = messages;
-    },
+    // updateNewMessage(messages) {
+    //   this.messages = messages;
+    // },
     //update when edit a message
     modifyOneMessage(message) {
-      //console.log("msg", message);
-      return message;
+      console.log("message", message);
+      let messageId = document.getElementById(
+        "id-" + this.currentUpdateMessage
+      );
+      messageId.innerHTML = message;
     },
     getAllMessages() {
+      console.log("je suis la");
       messageService
         .getAll()
         .then((response) => {
