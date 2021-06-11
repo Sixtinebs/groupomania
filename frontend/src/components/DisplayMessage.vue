@@ -6,12 +6,13 @@
         :key="item.message"
       >
         <div>
-          <router-link :to="{ name: 'Post', params: { id: item.id }}">{{item.title}}</router-link>
-          <p class="user-name">{{ item.User.name }}</p>
-          <p
+          <router-link
+            :to="{ name: 'Post', params: { id: item.id }}"
             class="message-user"
             :id="'id-'+item.id"
-          >{{ item.message }}</p>
+          >{{item.title}}</router-link>
+          <p class="user-name">{{ item.User.name }}</p>
+
           <UpdateMessage
             class="input-update-message"
             v-bind:style="{display:computedDisplay}"
