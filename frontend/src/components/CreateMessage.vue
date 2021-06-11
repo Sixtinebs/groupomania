@@ -1,6 +1,7 @@
 <template>
   <form>
     <label for="message"></label>
+    <div style="margin: 20px 0;"></div>
     <el-input
       type="text"
       :rows="2"
@@ -9,9 +10,21 @@
       name="message"
       minlength="1"
       required
-      v-model="message"
+      v-model="title"
     >
     </el-input>
+    <el-input
+      type="textarea"
+      placeholder="Votre message"
+      id="message"
+      name="message"
+      minlength="1"
+      required
+      v-model="message"
+      show-word-limit
+    >
+    </el-input>
+
     <el-button
       type="success"
       icon="el-icon-check"
@@ -23,11 +36,19 @@
 
 <script>
 import messageService from "../service/messageService";
+import { ref } from "vue";
 export default {
   emits: ["reloadMessage"],
-  data() {
+  // data() {
+  //   return {
+  //     message: "",
+  //     newMessages: [],
+  //   };
+  // },
+  setup() {
     return {
-      message: "",
+      title: ref(""),
+      message: ref(""),
       newMessages: [],
     };
   },
@@ -37,6 +58,7 @@ export default {
       let infoMessage = {
         id: null,
         user_id: this.$store.state.userInfo.userId,
+        title: this.title,
         message: this.message,
         createdAt: null,
         updatedAt: null,
@@ -46,9 +68,8 @@ export default {
         .createMessage(infoMessage, token)
         .then((response) => console.log(response.data.message))
         .catch((error) => console.log(error));
+      this.title = "";
       this.message = "";
-      //window.location.reload();
-      //setTimeout(this.updateMessage(), 2000);
       this.$emit("reloadMessage");
     },
   },
@@ -56,7 +77,7 @@ export default {
 </script>
 
 <style scoped>
-form {
+/* form {
   display: flex;
   vertical-align: bottom;
   position: absolute;
@@ -70,5 +91,5 @@ form {
 }
 .el-button {
   border-radius: 0 4px 4px 0;
-}
+} */
 </style>

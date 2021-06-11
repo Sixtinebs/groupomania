@@ -14,6 +14,9 @@
     <el-menu-item index="2">
       <router-link to="/profil">Mon Profil</router-link>
     </el-menu-item>
+    <el-menu-item index="3">
+      <router-link to="/editPost">Écrire un article</router-link>
+    </el-menu-item>
     <el-menu-item
       index="3"
       class="disconnection"

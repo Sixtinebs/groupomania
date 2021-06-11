@@ -4,9 +4,9 @@
       <div
         v-for="item in messages"
         :key="item.message"
-        :class="[item.user_id == user.id ? myMessage :  notMyMessage]"
       >
         <div>
+          <router-link :to="{ name: 'Post', params: { id: item.id }}">{{item.title}}</router-link>
           <p class="user-name">{{ item.User.name }}</p>
           <p
             class="message-user"
@@ -37,26 +37,23 @@
       </div>
     </section>
   </el-scrollbar>
-  <CreateMessage @reload-message="getAllMessages" />
+  <!-- <CreateMessage @reload-message="getAllMessages" /> -->
 
 </template>
 
 <script>
 import messageService from "../service/messageService";
 import { mapState } from "vuex";
-import CreateMessage from "./CreateMessage.vue";
+//import CreateMessage from "./CreateMessage.vue";
 import UpdateMessage from "./UpdateMessage.vue";
 export default {
   components: {
-    CreateMessage,
+    //CreateMessage,
     UpdateMessage,
   },
   data() {
     return {
       messages: [],
-      test: "",
-      myMessage: "right",
-      notMyMessage: "left",
       display: "none",
       currentUpdateMessage: null,
     };
@@ -69,24 +66,17 @@ export default {
     },
   },
   methods: {
-    // Update when create a new message
-    // updateNewMessage(messages) {
-    //   this.messages = messages;
-    // },
     //update when edit a message
     modifyOneMessage(message) {
-      console.log("message", message);
       let messageId = document.getElementById(
         "id-" + this.currentUpdateMessage
       );
       messageId.innerHTML = message;
     },
     getAllMessages() {
-      console.log("je suis la");
       messageService
         .getAll()
         .then((response) => {
-          console.log("ici");
           this.messages = response.data.message;
         })
         .catch((error) => {
@@ -125,12 +115,6 @@ export default {
 </script>
 
 <style scoped>
-.right {
-  text-align: end;
-}
-.left {
-  text-align: start;
-}
 .user-name {
   font-weight: bold;
 }

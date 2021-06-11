@@ -35,7 +35,6 @@ export default defineComponent({
         .updateMessage(id, message, token)
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
-      console.log("message", message);
       this.$emit("updateMessage", message);
     },
   },

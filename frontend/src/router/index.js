@@ -5,6 +5,8 @@ import Register from '@/views/Register.vue';
 import Home from '@/views/Home.vue';
 import NotFound from '@/views/NotFound.vue';
 import Profil from '@/views/Profil.vue';
+import EditPost from '@/views/EditPost.vue';
+import Post from '@/views/Post.vue';
 
 
 function guardMyroute(to, from, next) {
@@ -62,9 +64,25 @@ const routes = [
         beforeEnter: guardMyroute,
         component: Profil,
         meta: {
-            title: 'Profil'
+            title: 'Mon profil'
         }
+    },
+    {
+        name: 'EditPost',
+        path: '/editPost',
+        beforeEnter: guardMyroute,
+        component: EditPost,
+        meta: {
+            title: 'Écire un article'
+        }
+    },
+    {
+        name: 'Post',
+        path: '/post/:id',
+        beforeEnter: guardMyroute,
+        component: Post,
     }
+
 ];
 
 const router = createRouter({

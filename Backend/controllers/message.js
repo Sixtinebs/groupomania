@@ -14,9 +14,13 @@ exports.getAllMessages = (req, res, next) => {
         {
             include: [{
                 model: db.User,
-                attributes: ['id', 'name']
-            }]
+                attributes: ['id', 'name'],
+
+            }],
+            order: [['id', 'DESC']],
+
         }
+
     ).then(msg => {
         //on récupère ici un tableau "users" contenant une liste d'utilisateurs
         res.status(200).json({ message: msg });

@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
         message: {
             type: DataTypes.TEXT(65000),
             allowNull: false,
+        },
+        title: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
         }
     }, {
         sequelize,
