@@ -17,6 +17,7 @@ export default {
     getMessage() {
       let token = this.$store.state.userInfo.token;
       let id = this.$route.params.id;
+      console.log(id);
       messageService
         .getOneMessage(id, token)
         .then((response) => (this.infoPost = response.data.message))

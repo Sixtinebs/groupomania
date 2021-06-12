@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar height="400px">
+  <el-scrollbar height="500px">
     <section>
       <div
         v-for="item in messages"
@@ -13,13 +13,7 @@
           >{{item.title}}</router-link>
           <p class="user-name">{{ item.User.name }}</p>
 
-          <UpdateMessage
-            class="input-update-message"
-            v-bind:style="{display:computedDisplay}"
-            v-if="currentUpdateMessage == item.id"
-            :messageId="currentUpdateMessage"
-            @update-message="modifyOneMessage"
-          />
+          <UpdateMessage v-if="currentUpdateMessage == item.id" />
           <el-button
             v-if="item.user_id == user.id"
             type="primary"
@@ -61,19 +55,8 @@ export default {
   },
   computed: {
     ...mapState(["user"]),
-    //return data css display
-    computedDisplay: function () {
-      return this.display;
-    },
   },
   methods: {
-    //update when edit a message
-    modifyOneMessage(message) {
-      let messageId = document.getElementById(
-        "id-" + this.currentUpdateMessage
-      );
-      messageId.innerHTML = message;
-    },
     getAllMessages() {
       messageService
         .getAll()
@@ -90,12 +73,10 @@ export default {
         if (item.id == id) {
           //Change variable
           this.currentUpdateMessage = id;
-          //Hide or show input
-          if (this.display == "none") {
-            this.display = "inline-block";
-          } else {
-            this.display = "none";
-          }
+          this.$router.push({
+            name: "ModifyPost",
+            params: { id: this.currentUpdateMessage },
+          });
         }
       }
     },
@@ -118,8 +99,5 @@ export default {
 <style scoped>
 .user-name {
   font-weight: bold;
-}
-.input-update-message {
-  display: none;
 }
 </style>

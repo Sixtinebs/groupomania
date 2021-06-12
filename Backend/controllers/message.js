@@ -1,5 +1,4 @@
 
-// const User = require('../models/user');
 const db = require('../models');
 
 exports.createMessage = (req, res, next) => {
@@ -37,7 +36,8 @@ exports.getOneMessage = (req, res, next) => {
         .catch(error => res.status(404).json({ error }))
 }
 exports.modifyMessage = (req, res, next) => {
-    const newMessage = { message: req.body.message }
+    const newMessage = req.body
+    console.log('newmessage', req.body)
     db.Message.update(newMessage, { where: { id: req.query.id } })
         .then(() => {
             res.status(200).json({ message: 'Message modifié' })

@@ -1,15 +1,29 @@
 <template>
+  <h1>Modifie ton article </h1>
   <div>
     <form class="form-update-message">
       <el-input
+        type="text"
+        :rows="2"
+        placeholder="Votre message"
+        id="message"
+        name="message"
+        minlength="1"
+        required
+        v-model="title"
+      >
+      </el-input>
+      <el-input
+        type="textarea"
         placeholder="Entrez quelque chose"
-        v-model="inputMessage"
+        v-model="message"
+        minlength="1"
+        required
       ></el-input>
       <el-button
         type="success"
         icon="el-icon-check"
-        circle
-        @click="sendUpdateMessage(messageId, inputMessage)"
+        @click="sendUpdateMessage()"
       ></el-button>
     </form>
   </div>
@@ -22,27 +36,33 @@ export default defineComponent({
   emits: ["updateMessage"],
   setup() {
     return {
-      inputMessage: ref(""),
+      message: ref(""),
+      title: ref(""),
     };
   },
-  props: {
-    messageId: Number,
-  },
+  // props: {
+  //   messageId: Number,
+  // },
   methods: {
-    sendUpdateMessage: function (id, message) {
+    sendUpdateMessage: function () {
       let token = this.$store.state.userInfo.token;
+      let infoMessages = {
+        title: this.title,
+        message: this.message,
+      };
+      let id = this.$route.params.id;
       messageService
-        .updateMessage(id, message, token)
+        .updateMessage(id, infoMessages, token)
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
-      this.$emit("updateMessage", message);
+      this.$emit("updateMessage");
+      this.$router.push({
+        name: "Home",
+      });
     },
   },
 });
 </script>
 
 <style scoped>
-.form-update-message {
-  display: flex;
-}
 </style>

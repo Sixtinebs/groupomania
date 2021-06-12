@@ -71,6 +71,9 @@ export default {
       this.title = "";
       this.message = "";
       this.$emit("reloadMessage");
+      this.$router.push({
+        name: "Home",
+      });
     },
   },
 };

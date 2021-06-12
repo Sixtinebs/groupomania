@@ -7,6 +7,7 @@ import NotFound from '@/views/NotFound.vue';
 import Profil from '@/views/Profil.vue';
 import EditPost from '@/views/EditPost.vue';
 import Post from '@/views/Post.vue';
+import UpdateMessage from '@/components/UpdateMessage';
 
 
 function guardMyroute(to, from, next) {
@@ -73,7 +74,7 @@ const routes = [
         beforeEnter: guardMyroute,
         component: EditPost,
         meta: {
-            title: 'Écire un article'
+            title: 'Écrire un article'
         }
     },
     {
@@ -81,6 +82,12 @@ const routes = [
         path: '/post/:id',
         beforeEnter: guardMyroute,
         component: Post,
+    },
+    {
+        name: 'ModifyPost',
+        path: '/modifyPost/:id',
+        beforeEnter: guardMyroute,
+        component: UpdateMessage,
     }
 
 ];
