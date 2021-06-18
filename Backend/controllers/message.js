@@ -32,11 +32,6 @@ exports.getAllMessages = (req, res, next) => {
                 model: db.User,
                 attributes: ['id', 'name'],
 
-            }, {
-                model: db.Comment,
-                as: 'Comments',
-                attributes: ['id']
-
             }],
             order: [['id', 'DESC']],
 
@@ -51,7 +46,17 @@ exports.getAllMessages = (req, res, next) => {
     });
 }
 exports.getOneMessage = (req, res, next) => {
-    db.Message.findOne({ where: { id: req.query.id } })
+    db.Message.findOne({
+        where: { id: req.query.id },
+        include: [{
+            model: db.Comment,
+            attributes: ['id', 'comment'],
+            include: [{
+                model: db.User,
+                attributes: ['id', 'name']
+            }]
+        }]
+    })
         .then(message => {
             res.status(200).json({ message: message })
         })

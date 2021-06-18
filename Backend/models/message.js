@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             models.Message.belongsTo(models.User, { foreignKey: 'user_id' });
-            models.Message.hasMany(models.Comment, { foreignKey: 'id' });
+            models.Message.hasMany(models.Comment, { foreignKey: 'message_id' });
         }
     };
     Message.init({
