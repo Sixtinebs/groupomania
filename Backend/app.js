@@ -6,6 +6,7 @@ const cors = require('cors');
 const app = express();
 const usersRoute = require('./routes/user');
 const messagesRoute = require('./routes/message');
+const commentsRoute = require('./routes/comment');
 
 //.env
 require('dotenv').config();
@@ -50,5 +51,6 @@ try {
 // My Routes
 app.use('/groupomania/auth', usersRoute);
 app.use('/groupomania/message', messagesRoute);
+app.use('/groupomania/comment', commentsRoute);
 
 module.exports = app;

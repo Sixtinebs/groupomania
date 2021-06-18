@@ -11,12 +11,11 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             models.Message.belongsTo(models.User, { foreignKey: 'user_id' });
+            models.Message.hasMany(models.Comment, { foreignKey: 'id' });
         }
     };
     Message.init({
-        // id: DataTypes.INTEGER,
-        // user_id: DataTypes.INTEGER,
-        // message: DataTypes.TEXT
+
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
             autoIncrement: true,

@@ -1,11 +1,11 @@
 <template>
   <el-scrollbar height="500px">
-    <section>
+    <section class="container-post">
       <div
         v-for="item in messages"
         :key="item.message"
       >
-        <div>
+        <div class="post">
           <router-link
             :to="{ name: 'Post', params: { id: item.id }}"
             class="message-user"
@@ -58,8 +58,9 @@ export default {
   },
   methods: {
     getAllMessages() {
+      let token = this.$store.state.userInfo.token;
       messageService
-        .getAll()
+        .getAll(token)
         .then((response) => {
           this.messages = response.data.message;
         })
@@ -99,5 +100,27 @@ export default {
 <style scoped>
 .user-name {
   font-weight: bold;
+}
+.container-post {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.container-post div {
+  width: 50%;
+  height: 120px;
+  margin-bottom: 50px;
+}
+.post {
+  margin: auto;
+  padding: 20px;
+  border: 2px solid rgb(84, 92, 100);
+  background-color: rgb(84 92 100 / 5%);
+  border-radius: 15px;
+}
+@media screen and (max-width: 650px) {
+  .container-post div {
+    width: 80%;
+  }
 }
 </style>
