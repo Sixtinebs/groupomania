@@ -23,7 +23,7 @@ exports.createComments = (req, res, next) => {
         }
         if (decoded) {
             db.Comment.create(comment)
-                .then(() => res.status(201).json({ message: 'Comment write !' }))
+                .then(() => { res.status(201).json({ message: 'Comment write !' }) })
                 .catch(error => res.status(500).json({ error }))
         } else {
             res.status(401).json({ err })
