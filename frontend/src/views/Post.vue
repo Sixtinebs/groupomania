@@ -11,25 +11,24 @@
       v-for="comment in infoPost.Comments"
       :key="comment"
       class="container-comment"
+      :id="'container-'+comment.id"
     >
       <p class="comment-name">{{comment.User.name}}</p>
       <p
         class="comment-commment"
         :id="'com-'+comment.id"
       >{{comment.comment}}</p>
-      <!-- derniere modification ici ppur ajouter le nouveau commentaire modifié-->
-      <!-- <p @currentComment="comment.comment">{{ currentComment}}</p> -->
       <div v-if="currentUser == comment.User.id">
         <UpdateComment
           :commentId="comment.id"
           @updateComment="changeComment"
+          @deleteComment="removeComment"
         />
       </div>
 
     </div>
   </section>
   <CreateComment @addComment="getMessage" />
-
 </template>
 <script>
 import messageService from "../service/messageService";
@@ -63,6 +62,11 @@ export default {
     },
     addCurrentComment() {
       return this.currentComment;
+    },
+    removeComment(id) {
+      let com = document.getElementById("container-" + id);
+      console.log(com);
+      com.remove();
     },
   },
   created() {

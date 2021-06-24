@@ -30,7 +30,7 @@
     type="danger"
     icon="el-icon-delete"
     circle
-    @click="deleteComment()"
+    @click="deleteComment(token, commentId)"
   ></el-button>
 
 </template>
@@ -71,7 +71,12 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    deleteComment() {},
+    deleteComment(token, id) {
+      commentServie
+        .deleteComment(token, id)
+        .then(() => this.$emit("deleteComment", id))
+        .catch((error) => console.log(error));
+    },
   },
 };
 </script>

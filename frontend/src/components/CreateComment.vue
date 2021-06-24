@@ -42,7 +42,7 @@ export default {
       let token = this.$store.state.userInfo.token;
       commentService
         .createComment(token, comment)
-        .then(() => this.$emit("addComment"))
+        .then(() => this.$emit("addComment"), (this.comment = ""))
         .catch((error) => console.log(error));
     },
   },
