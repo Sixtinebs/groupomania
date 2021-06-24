@@ -13,16 +13,13 @@ exports.createMessage = (req, res, next) => {
             }
         }
         if (!decoded) {
-            console.log('invalid token')
-            res.status(500).json({ err });
+            return res.status(404).json({ err });
         } else {
             db.Message.create(message)
                 .then(() => { res.status(201).json({ message: 'Message crée !' }) })
                 .catch(error => { res.status(500).json({ error }) })
         }
     })
-
-
 }
 
 exports.getAllMessages = (req, res, next) => {
@@ -70,7 +67,7 @@ exports.modifyMessage = (req, res, next) => {
     db.Message.findOne({ where: { id: req.query.id } })
         .then(message => {
             if (message.user_id != userId) {
-                console.log('Token invalid')
+                return res.status(404).json({ err: 'Invalid Token' })
             } else {
                 db.Message.update(newMessage, { where: { id: req.query.id } })
                     .then(() => {
@@ -89,7 +86,7 @@ exports.deleteMessage = (req, res, next) => {
     db.Message.findOne({ where: { id: req.query.id } })
         .then(message => {
             if (message.user_id != userId) {
-                console.log('Token invalid')
+                return res.status(404).json({ err: 'Invalid Token' })
             } else {
                 db.Message.destroy({ where: { id: req.query.id } })
                     .then(() => {

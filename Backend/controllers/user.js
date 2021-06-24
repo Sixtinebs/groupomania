@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.getAllUser = (req, res, next) => {
-
     //recherche de tous les utilisateurs
     db.User.findAll({}).then(users => {
         //on récupère ici un tableau "users" contenant une liste d'utilisateurs
@@ -71,4 +70,50 @@ exports.login = (req, res, next) => {
                 .catch(error => res.status(500).json({ error }))
         })
         .catch(error => res.status(400).json({ error }))
+}
+exports.modify = (req, res, next) => {
+    let token = req.headers.authorization.split(' ')[1];
+    let userUpdate = req.body;
+    jwt.verify(token, process.env.TOKEN, function (err, decoded) {
+        if (err) {
+            console.log('Invalid token')
+            err = {
+                name: 'TokenExpiredError',
+                message: 'jwt expired',
+            }
+            res.status(401).json({ err })
+        }
+        if (decoded.userId === req.query.id) {
+            db.User.findOne({ where: { id: req.query.id } })
+                .then(() => {
+                    db.User.update(userUpdate, { where: { id: req.query.id } })
+                        .then(() => res.status(200).json({ message: 'user has been modifed' }))
+                        .catch(error => res.status(500).json({ error }))
+                })
+                .catch(error => res.status(404).json({ error }))
+        } else {
+            return res.status(404).json({ message: 'Invalid token' })
+        }
+    })
+}
+exports.delete = (req, res, next) => {
+    console.log()
+    let token = req.headers.authorization.split(' ')[1];
+    jwt.verify(token, process.env.TOKEN, function (err, decoded) {
+        if (err) {
+            err = {
+                name: 'TokenExpiredError',
+                message: 'jwt expired',
+            }
+            res.status(401).json({ err })
+        }
+
+        if (decoded.userId === req.query.id) {
+            db.User.destroy({ where: { id: req.query.id } })
+                .then((user) => res.status(204).json({ message: 'user ' + user.name + ' has been remove' }))
+                .catch((error) => res.status(500).json({ error }))
+        } else {
+            return res.status(404).json({ message: 'Invalid token' })
+        }
+    })
 }

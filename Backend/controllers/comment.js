@@ -43,7 +43,7 @@ exports.modifyComments = (req, res, next) => {
             }
             res.status(401).json({ err })
         }
-        if (decoded) {
+        if (decoded.userId === req.query.id) {
             db.Comment.findOne({ where: { id: req.query.id } })
                 .then(comment => {
                     console.log(comment)
@@ -53,6 +53,8 @@ exports.modifyComments = (req, res, next) => {
                 })
                 .catch(error => res.status(500).json({ error }))
 
+        } else {
+            return res.status(404).json({ err })
         }
     })
 }

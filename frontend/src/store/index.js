@@ -24,18 +24,22 @@ if (!userInfo) {
     }
 
 }
+let userProfil = localStorage.getItem('userProfil');
+userProfil = JSON.parse(userProfil)
+console.log('localStorage', userProfil)
 const store = createStore({
     //Current state
     state: {
         status: '',
         userInfo: userInfo,
-        user: {
-            id: '',
-            name: '',
-            email: '',
-            isAdmin: ''
+        user: { userProfil },
+        // user: {
+        //     id: '',
+        //     name: '',
+        //     email: '',
+        //     isAdmin: ''
 
-        }
+        // }
     },
     // function => change the state
     mutations: {
@@ -51,6 +55,14 @@ const store = createStore({
             state.user.name = user.name;
             state.user.email = user.email;
             state.user.isAdmin = user.isAdmin;
+            let userProfil = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin
+            };
+            localStorage.setItem('userProfil', JSON.stringify(userProfil))
+            console.log('GET_USER', userProfil)
 
         },
         DISCONNECT_USER: function (state, userInfo) {
