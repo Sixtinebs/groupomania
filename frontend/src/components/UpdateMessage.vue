@@ -40,9 +40,6 @@ export default defineComponent({
       title: ref(""),
     };
   },
-  // props: {
-  //   messageId: Number,
-  // },
   methods: {
     sendUpdateMessage: function () {
       let token = this.$store.state.userInfo.token;

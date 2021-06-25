@@ -3,8 +3,7 @@
   <h2>Mes informations</h2>
   <p>Prénom : {{ user.userProfil.name}}</p>
   <p>Email : {{user.userProfil.email}}</p>
-  <!-- <update-profil /> -->
-  <UpdateProfil />
+  <update-profil />
 
 </template>
 

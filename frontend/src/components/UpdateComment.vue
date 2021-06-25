@@ -1,5 +1,5 @@
 <template>
-  <div:
+  <div
     :id="commentId+'-texte-area'"
     :style="{display: isDisplay}"
   >
@@ -18,7 +18,7 @@
       icon="el-icon-check"
       @click="sendUpdateComment(token,commentId, {comment: comment})"
     ></el-button>
-  </div:>
+  </div>
 
   <el-button
     type="primary"
@@ -39,7 +39,7 @@ import commentServie from "../service/commentService";
 import { ref } from "vue";
 import store from "../store/index";
 export default {
-  emits: ["updateComment"],
+  emits: ["updateComment", "deleteComment"],
   props: {
     commentId: Number,
   },
@@ -53,7 +53,6 @@ export default {
 
   methods: {
     showHide() {
-      console.log(this.commentComment);
       if (this.isDisplay == "none") {
         this.isDisplay = "block";
       } else {
@@ -63,9 +62,8 @@ export default {
     sendUpdateComment(token, id, comment) {
       commentServie
         .updateComment(token, id, comment)
-        .then((response) => {
-          console.log(response),
-            this.$emit("updateComment", comment.comment, id),
+        .then(() => {
+          this.$emit("updateComment", comment.comment, id),
             (this.comment = ""),
             (this.isDisplay = "none");
         })

@@ -43,6 +43,7 @@ export default {
         userId: -1,
         token: "",
       });
+      localStorage.clear();
       this.$router.push({ path: "/" });
     },
   },

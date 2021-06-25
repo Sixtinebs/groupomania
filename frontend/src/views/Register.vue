@@ -62,8 +62,6 @@
 
 
 <script>
-//import { mapState } from "vuex";
-
 export default {
   data: function () {
     return {
@@ -80,8 +78,6 @@ export default {
         return false;
       }
     },
-
-    //...mapState(["status"]),
   },
   mounted() {
     const id = this.$store.state.userInfo.userId;

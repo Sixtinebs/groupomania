@@ -39,12 +39,6 @@ import messageService from "../service/messageService";
 import { ref } from "vue";
 export default {
   emits: ["reloadMessage"],
-  // data() {
-  //   return {
-  //     message: "",
-  //     newMessages: [],
-  //   };
-  // },
   setup() {
     return {
       title: ref(""),

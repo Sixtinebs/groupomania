@@ -4,22 +4,9 @@ const jwt = require('jsonwebtoken');
 
 exports.createMessage = (req, res, next) => {
     const message = req.body;
-    const token = req.headers.authorization.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN, function (err, decoded) {
-        if (err) {
-            err = {
-                name: 'TokenExpiredError',
-                message: 'jwt expired',
-            }
-        }
-        if (!decoded) {
-            return res.status(404).json({ err });
-        } else {
-            db.Message.create(message)
-                .then(() => { res.status(201).json({ message: 'Message crée !' }) })
-                .catch(error => { res.status(500).json({ error }) })
-        }
-    })
+    db.Message.create(message)
+        .then(() => { res.status(201).json({ message: 'Message crée !' }) })
+        .catch(error => { res.status(500).json({ error }) })
 }
 
 exports.getAllMessages = (req, res, next) => {
@@ -28,12 +15,9 @@ exports.getAllMessages = (req, res, next) => {
             include: [{
                 model: db.User,
                 attributes: ['id', 'name'],
-
             }],
             order: [['id', 'DESC']],
-
         }
-
     ).then(msg => {
         //on récupère ici un tableau "users" contenant une liste d'utilisateurs
         res.status(200).json({ message: msg });
@@ -61,14 +45,9 @@ exports.getOneMessage = (req, res, next) => {
 }
 exports.modifyMessage = (req, res, next) => {
     const newMessage = req.body
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, process.env.TOKEN);
-    const userId = decodedToken.userId;
     db.Message.findOne({ where: { id: req.query.id } })
         .then(message => {
-            if (message.user_id != userId) {
-                return res.status(404).json({ err: 'Invalid Token' })
-            } else {
+            if (res.locals.user.userId === message.user_id) {
                 db.Message.update(newMessage, { where: { id: req.query.id } })
                     .then(() => {
                         res.status(200).json({ message: 'Message modifié' })
@@ -80,14 +59,9 @@ exports.modifyMessage = (req, res, next) => {
 }
 
 exports.deleteMessage = (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, process.env.TOKEN);
-    const userId = decodedToken.userId;
     db.Message.findOne({ where: { id: req.query.id } })
         .then(message => {
-            if (message.user_id != userId) {
-                return res.status(404).json({ err: 'Invalid Token' })
-            } else {
+            if (res.locals.user.userId === message.user_id) {
                 db.Message.destroy({ where: { id: req.query.id } })
                     .then(() => {
                         res.status(204).json({ message: 'Message supprimé ' })
@@ -96,5 +70,4 @@ exports.deleteMessage = (req, res, next) => {
             }
         })
         .catch(error => res.status(404).json({ error }))
-
 }

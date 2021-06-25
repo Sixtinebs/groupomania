@@ -13,7 +13,7 @@
           >{{item.title}}</router-link>
           <p class="user-name">{{ item.User.name }}</p>
 
-          <UpdateMessage v-if="currentUpdateMessage == item.id" />
+          <update-message v-if="currentUpdateMessage == item.id" />
           <el-button
             v-if="item.user_id == user.id"
             type="primary"
@@ -32,18 +32,15 @@
       </div>
     </section>
   </el-scrollbar>
-  <!-- <CreateMessage @reload-message="getAllMessages" /> -->
 
 </template>
 
 <script>
 import messageService from "../service/messageService";
 import { mapState } from "vuex";
-//import CreateMessage from "./CreateMessage.vue";
 import UpdateMessage from "./UpdateMessage.vue";
 export default {
   components: {
-    //CreateMessage,
     UpdateMessage,
   },
   data() {

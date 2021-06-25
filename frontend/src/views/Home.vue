@@ -1,6 +1,6 @@
 <template>
   <h1>Bonjour {{ user.name }} !</h1>
-  <DisplayMessage />
+  <display-message />
 </template>
 <script>
 import { mapState } from "vuex";

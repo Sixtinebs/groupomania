@@ -19,16 +19,16 @@
         :id="'com-'+comment.id"
       >{{comment.comment}}</p>
       <div v-if="currentUser == comment.User.id">
-        <UpdateComment
-          :commentId="comment.id"
-          @updateComment="changeComment"
-          @deleteComment="removeComment"
+        <update-comment
+          :comment-id="comment.id"
+          @update-comment="changeComment"
+          @delete-comment="removeComment"
         />
       </div>
 
     </div>
   </section>
-  <CreateComment @addComment="getMessage" />
+  <create-comment @add-comment="getMessage" />
 </template>
 <script>
 import messageService from "../service/messageService";

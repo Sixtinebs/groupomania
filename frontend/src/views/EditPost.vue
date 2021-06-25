@@ -1,6 +1,6 @@
 <template>
   <h1>Écrire un article </h1>
-  <CreateMessage />
+  <create-message />
 </template>
 
 <script>

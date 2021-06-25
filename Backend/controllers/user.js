@@ -72,48 +72,25 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(400).json({ error }))
 }
 exports.modify = (req, res, next) => {
-    let token = req.headers.authorization.split(' ')[1];
     let userUpdate = req.body;
-    jwt.verify(token, process.env.TOKEN, function (err, decoded) {
-        if (err) {
-            console.log('Invalid token')
-            err = {
-                name: 'TokenExpiredError',
-                message: 'jwt expired',
+    db.User.findOne({ where: { id: req.query.id } })
+        .then((user) => {
+            if (res.locals.user.userId === user.id) {
+                db.User.update(userUpdate, { where: { id: req.query.id } })
+                    .then(() => res.status(200).json({ message: 'user has been modifed' }))
+                    .catch(error => res.status(500).json({ error }))
             }
-            res.status(401).json({ err })
-        }
-        if (decoded.userId === req.query.id) {
-            db.User.findOne({ where: { id: req.query.id } })
-                .then(() => {
-                    db.User.update(userUpdate, { where: { id: req.query.id } })
-                        .then(() => res.status(200).json({ message: 'user has been modifed' }))
-                        .catch(error => res.status(500).json({ error }))
-                })
-                .catch(error => res.status(404).json({ error }))
-        } else {
-            return res.status(404).json({ message: 'Invalid token' })
-        }
-    })
+        })
+        .catch(error => res.status(404).json({ error }))
 }
 exports.delete = (req, res, next) => {
-    console.log()
-    let token = req.headers.authorization.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN, function (err, decoded) {
-        if (err) {
-            err = {
-                name: 'TokenExpiredError',
-                message: 'jwt expired',
+    db.User.findOne({ where: { id: req.query.id } })
+        .then(user => {
+            if (res.locals.user.userId === user.id) {
+                db.User.destroy({ where: { id: req.query.id } })
+                    .then((user) => res.status(204).json({ message: 'user ' + user.name + ' has been remove' }))
+                    .catch((error) => res.status(500).json({ error }))
             }
-            res.status(401).json({ err })
-        }
+        })
 
-        if (decoded.userId === req.query.id) {
-            db.User.destroy({ where: { id: req.query.id } })
-                .then((user) => res.status(204).json({ message: 'user ' + user.name + ' has been remove' }))
-                .catch((error) => res.status(500).json({ error }))
-        } else {
-            return res.status(404).json({ message: 'Invalid token' })
-        }
-    })
 }
