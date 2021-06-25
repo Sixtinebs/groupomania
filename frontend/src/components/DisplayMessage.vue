@@ -15,14 +15,14 @@
 
           <update-message v-if="currentUpdateMessage == item.id" />
           <el-button
-            v-if="item.user_id == user.id"
+            v-if="item.user_id == user.userProfil.id"
             type="primary"
             icon="el-icon-edit"
             circle
             @click="updateMessage(item.id)"
           ></el-button>
           <el-button
-            v-if="item.user_id == user.id"
+            v-if="item.user_id == user.userProfil.id"
             type="danger"
             icon="el-icon-delete"
             circle

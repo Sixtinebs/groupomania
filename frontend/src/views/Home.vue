@@ -1,5 +1,5 @@
 <template>
-  <h1>Bonjour {{ user.name }} !</h1>
+  <h1>Bonjour {{ user.userProfil.name }} !</h1>
   <display-message />
 </template>
 <script>
@@ -15,7 +15,6 @@ export default {
   },
   mounted() {
     const id = this.$store.state.userInfo.userId;
-    console.log(id);
     this.$store.dispatch("getUser", id);
   },
 };

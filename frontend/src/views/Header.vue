@@ -42,6 +42,7 @@ export default {
       this.$store.dispatch("disconnectUser", {
         userId: -1,
         token: "",
+        user: {},
       });
       localStorage.clear();
       this.$router.push({ path: "/" });

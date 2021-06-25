@@ -13,6 +13,7 @@ exports.getAllUser = (req, res, next) => {
     });
 }
 exports.getOneUser = (req, res, next) => {
+    console.log(req)
     db.User.findOne({ where: { id: req.query.userId } })
         .then(user => {
             res.status(200).json({ user: user })
@@ -49,7 +50,6 @@ exports.register = (req, res, next) => {
 
 exports.login = (req, res, next) => {
     const userInfo = req.body.userInfo;
-
     db.User.findOne({ where: { email: userInfo.email } })
         .then(user => {
             bcrypt.compare(userInfo.password, user.password)
@@ -73,10 +73,11 @@ exports.login = (req, res, next) => {
 }
 exports.modify = (req, res, next) => {
     let userUpdate = req.body;
-    db.User.findOne({ where: { id: req.query.id } })
+    db.User.findOne({ where: { id: req.params.id } })
         .then((user) => {
+            console.log('par la')
             if (res.locals.user.userId === user.id) {
-                db.User.update(userUpdate, { where: { id: req.query.id } })
+                db.User.update(userUpdate, { where: { id: req.params.id } })
                     .then(() => res.status(200).json({ message: 'user has been modifed' }))
                     .catch(error => res.status(500).json({ error }))
             }

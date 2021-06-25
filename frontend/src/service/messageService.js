@@ -14,7 +14,6 @@ export default {
         return axios.put(`http://localhost:3000/groupomania/message?id=${id}`, message, { 'headers': { 'Authorization': 'Bearer ' + token } });
     },
     deleteMessage(id, token) {
-        console.log(id, token)
         return axios.delete(`http://localhost:3000/groupomania/message?id=${id}`, { 'headers': { 'Authorization': 'Bearer ' + token } })
     }
 }

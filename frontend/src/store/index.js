@@ -26,20 +26,12 @@ if (!userInfo) {
 }
 let userProfil = localStorage.getItem('userProfil');
 userProfil = JSON.parse(userProfil)
-console.log('localStorage', userProfil)
 const store = createStore({
     //Current state
     state: {
         status: '',
         userInfo: userInfo,
         user: { userProfil },
-        // user: {
-        //     id: '',
-        //     name: '',
-        //     email: '',
-        //     isAdmin: ''
-
-        // }
     },
     // function => change the state
     mutations: {
@@ -51,19 +43,19 @@ const store = createStore({
             localStorage.setItem('user', JSON.stringify(userInfo));
         },
         GET_USER: function (state, user) {
-            state.user.id = user.id;
-            state.user.name = user.name;
-            state.user.email = user.email;
-            state.user.isAdmin = user.isAdmin;
+            // state.user.id = user.id;
+            // state.user.name = user.name;
+            // state.user.email = user.email;
+            // state.user.isAdmin = user.isAdmin;
+
             let userProfil = {
                 id: user.id,
                 name: user.name,
                 email: user.email,
                 isAdmin: user.isAdmin
             };
-            localStorage.setItem('userProfil', JSON.stringify(userProfil))
-            console.log('GET_USER', userProfil)
-
+            state.user.userProfil = userProfil;
+            localStorage.setItem('userProfil', JSON.stringify(userProfil));
         },
         DISCONNECT_USER: function (state, userInfo) {
             state.userInfo = userInfo;
@@ -108,7 +100,6 @@ const store = createStore({
         },
         getUser: ({ commit }, userId) => {
             return new Promise((resolve, reject) => {
-                //instance.get('/auth/user', { userId: id })
                 userServices.getUser(userId)
                     .then(function (response) {
                         resolve(response);

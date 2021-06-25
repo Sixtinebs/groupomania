@@ -13,7 +13,7 @@ import UpdateProfil from "../components/UpdateProfil.vue";
 export default {
   components: { UpdateProfil },
   computed: {
-    ...mapState(["status", "user", "userInfo"]),
+    ...mapState(["status", "user"]),
   },
 };
 </script>
