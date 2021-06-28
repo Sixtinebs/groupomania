@@ -2,11 +2,40 @@
   <div>
     <el-button
       type="primary"
-      @click="editPost"
+      @click="editProfil"
     >Modifier</el-button>
-    <el-button type="danger">Supprimer</el-button>
+    <!-- <el-button
+      type="danger"
+      @click="removeProfil"
+    >Supprimer</el-button> -->
+    <el-popover
+      placement="top"
+      :width="160"
+      v-model:visible="visible"
+    >
+      <p>Voulez-vous vraiment supprimer votre profil?</p>
+      <div style="text-align: right; margin: 0">
+        <el-button
+          size="mini"
+          type="text"
+          @click="visible = false"
+        >Annuler</el-button>
+        <el-button
+          type="danger"
+          size="mini"
+          @click="removeProfil"
+        >Confirmer</el-button>
+      </div>
+      <template #reference>
+        <el-button
+          type="danger"
+          @click="visible = true"
+        >Supprimer</el-button>
+      </template>
+    </el-popover>
+
   </div>
-  <div class="form-container">
+  <div id="form-container">
     <el-input
       placeholder="Entrez votre nom"
       v-model="name"
@@ -30,19 +59,22 @@ export default {
     return {
       name: ref(""),
       email: ref(""),
+      isDisplay: false,
+      visible: ref(false),
     };
   },
   methods: {
-    editPost() {
-      console.log(this.name, this.email);
+    editProfil() {
+      let form = document.getElementById("form-container");
+      if (this.isDisplay) {
+        this.isDisplay = !this.isDisplay;
+        form.style.visibility = "hidden";
+      } else {
+        this.isDisplay = !this.isDisplay;
+        form.style.visibility = "visible";
+      }
     },
-    // getUser() {
-    //   let id = this.$store.state.userInfo.userId;
-    //   userService
-    //     .getUser(id)
-    //     .then(() => this.$store.dispatch("getUser", id))
-    //     .catch((error) => console.log(error));
-    // },
+
     sendNewData() {
       let token = this.$store.state.userInfo.token;
       let id = this.$store.state.userInfo.userId;
@@ -50,7 +82,6 @@ export default {
         name: this.name,
         email: this.email,
       };
-      console.log(id, token, data);
       userService
         .modifyUser(id, token, data)
         .then(() => {
@@ -58,8 +89,28 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+    removeProfil() {
+      let token = this.$store.state.userInfo.token;
+      let id = this.$store.state.userInfo.userId;
+      this.visible = false;
+      userService
+        .deleteUser(id, token)
+        .then(() => {
+          this.$store.dispatch("disconnectUser", {
+            userId: -1,
+            token: "",
+            user: {},
+          });
+          localStorage.clear();
+          this.$router.push({ path: "/" });
+        })
+        .catch((error) => console.log(error));
+    },
   },
 };
 </script>
 <style scoped>
+#form-container {
+  visibility: hidden;
+}
 </style>

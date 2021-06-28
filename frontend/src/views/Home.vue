@@ -1,5 +1,6 @@
 <template>
   <h1>Bonjour {{ user.userProfil.name }} !</h1>
+
   <display-message />
 </template>
 <script>

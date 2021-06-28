@@ -67,6 +67,7 @@ const store = createStore({
     actions: {
         addUser: ({ commit }, userInfo) => {
             //Commit a mutation
+            console.log({ userInfo })
             commit('SET_STATUS', 'loading')
             return new Promise((resolve, reject) => {
                 //set user info 
@@ -77,6 +78,7 @@ const store = createStore({
                         commit('CONNECT_USER', response.data);
                     })
                     .catch(function (error) {
+                        console.log('store')
                         reject(error);
                         commit('SET_STATUS', 'error_create');
                     });

@@ -13,7 +13,6 @@ exports.getAllUser = (req, res, next) => {
     });
 }
 exports.getOneUser = (req, res, next) => {
-    console.log(req)
     db.User.findOne({ where: { id: req.query.userId } })
         .then(user => {
             res.status(200).json({ user: user })
@@ -25,12 +24,12 @@ exports.register = (req, res, next) => {
     const userInfo = req.body.userInfo;
     bcrypt.hash(userInfo.password, 10)
         .then(hash => {
-            const user = new User({
+            const user = new db.User({
                 email: userInfo.email,
                 password: hash,
-                //isAdmin: userInfo.isAdmin,
                 name: userInfo.name
             });
+
             user.save()
                 .then(() => res.status(201).json({
                     message: 'user has been created ! ',
@@ -55,7 +54,6 @@ exports.login = (req, res, next) => {
             bcrypt.compare(userInfo.password, user.password)
                 .then(valid => {
                     if (!valid) {
-                        console.log(3);
                         return res.status(401).json({ message: 'your authantifications are not valid ' })
                     }
                     res.status(200).json({
@@ -75,7 +73,7 @@ exports.modify = (req, res, next) => {
     let userUpdate = req.body;
     db.User.findOne({ where: { id: req.params.id } })
         .then((user) => {
-            console.log('par la')
+
             if (res.locals.user.userId === user.id) {
                 db.User.update(userUpdate, { where: { id: req.params.id } })
                     .then(() => res.status(200).json({ message: 'user has been modifed' }))
@@ -85,10 +83,10 @@ exports.modify = (req, res, next) => {
         .catch(error => res.status(404).json({ error }))
 }
 exports.delete = (req, res, next) => {
-    db.User.findOne({ where: { id: req.query.id } })
+    db.User.findOne({ where: { id: req.params.id } })
         .then(user => {
             if (res.locals.user.userId === user.id) {
-                db.User.destroy({ where: { id: req.query.id } })
+                db.User.destroy({ where: { id: req.params.id } })
                     .then((user) => res.status(204).json({ message: 'user ' + user.name + ' has been remove' }))
                     .catch((error) => res.status(500).json({ error }))
             }

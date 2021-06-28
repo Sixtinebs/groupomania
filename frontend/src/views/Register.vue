@@ -62,11 +62,13 @@
 
 
 <script>
+import { ref } from "vue";
+import { mapState } from "vuex";
 export default {
-  data: function () {
+  setup() {
     return {
-      email: "",
-      name: "",
+      email: ref(""),
+      name: ref(""),
       password: "",
     };
   },
@@ -78,6 +80,7 @@ export default {
         return false;
       }
     },
+    ...mapState(["status"]),
   },
   mounted() {
     const id = this.$store.state.userInfo.userId;
@@ -88,8 +91,10 @@ export default {
   },
   methods: {
     addUser: function () {
+      console.log("ici");
       //for access element this
       const self = this;
+      console.log(this.email, this.password, this.name);
       //action trigger => dispatch
       this.$store
         .dispatch("addUser", {
