@@ -24,6 +24,18 @@
       show-word-limit
     >
     </el-input>
+    <div v-if="!image">
+      <input
+        type="file"
+        ref="file"
+        id="image"
+        @change="selectFile"
+        accept="image/png, image/jpeg"
+      />
+    </div>
+    <div v-else>
+      <img :src="image" />
+    </div>
 
     <el-button
       type="success"
@@ -44,22 +56,33 @@ export default {
       title: ref(""),
       message: ref(""),
       newMessages: [],
+      image: ref(""),
     };
   },
 
   methods: {
+    selectFile() {
+      this.image = this.$refs.file.files[0];
+    },
     sendMessage() {
-      let infoMessage = {
-        id: null,
-        user_id: this.$store.state.userInfo.userId,
-        title: this.title,
-        message: this.message,
-        createdAt: null,
-        updatedAt: null,
-      };
+      let formData = new FormData();
+
+      // let infoMessage = {
+      //   id: null,
+      //   user_id: this.$store.state.userInfo.userId,
+      //   title: this.title,
+      //   message: this.message,
+      //   createdAt: null,
+      //   updatedAt: null,
+      // };
+      formData.append("title", this.title);
+      formData.append("message", this.message);
+      formData.append("image", this.image);
+
       let token = this.$store.state.userInfo.token;
+      console.log("formData", formData);
       messageService
-        .createMessage(infoMessage, token)
+        .createMessage(formData, token)
         .then((response) => console.log(response.data.message))
         .catch((error) => console.log(error));
       this.title = "";
@@ -74,19 +97,4 @@ export default {
 </script>
 
 <style scoped>
-/* form {
-  display: flex;
-  vertical-align: bottom;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 10px;
-}
-.el-input__inner {
-  border-radius: 4px 0 0 4px;
-}
-.el-button {
-  border-radius: 0 4px 4px 0;
-} */
 </style>

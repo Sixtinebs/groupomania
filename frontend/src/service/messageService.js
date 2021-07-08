@@ -8,7 +8,7 @@ export default {
         return axios.get(`http://localhost:3000/groupomania/message/post/?id=${id}`, { 'headers': { 'Authorization': 'Bearer ' + token } })
     },
     createMessage(data, token) {
-        return axios.post('http://localhost:3000/groupomania/message', data, { 'headers': { 'Authorization': 'Bearer ' + token } });
+        return axios.post('http://localhost:3000/groupomania/message', data, { 'headers': { 'Authorization': 'Bearer ' + token, 'Content-Type': 'multipart/form-data' } });
     },
     updateMessage(id, message, token) {
         return axios.put(`http://localhost:3000/groupomania/message?id=${id}`, message, { 'headers': { 'Authorization': 'Bearer ' + token } });

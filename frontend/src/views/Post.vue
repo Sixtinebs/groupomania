@@ -4,6 +4,10 @@
     <div>
       <p>{{infoPost.message}}</p>
     </div>
+    <div v-if="infoPost.image"><img
+        :src="infoPost.image"
+        :alt="infoPost.title"
+      ></div>
   </section>
   <section class="comments">
     <h2>Les commentaires</h2>
@@ -18,7 +22,7 @@
         class="comment-commment"
         :id="'com-'+comment.id"
       >{{comment.comment}}</p>
-      <div v-if="currentUser == comment.User.id">
+      <div v-if="currentUser == comment.User.id || user.userProfil.isAdmin ">
         <update-comment
           :comment-id="comment.id"
           @update-comment="changeComment"
@@ -34,6 +38,7 @@
 import messageService from "../service/messageService";
 import CreateComment from "../components/CreateComment.vue";
 import UpdateComment from "../components/UpdateComment.vue";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -68,6 +73,9 @@ export default {
       console.log(com);
       com.remove();
     },
+  },
+  computed: {
+    ...mapState(["user"]),
   },
   created() {
     this.getMessage();

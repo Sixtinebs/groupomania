@@ -59,7 +59,11 @@ exports.login = (req, res, next) => {
                     res.status(200).json({
                         userId: user.id,
                         token: jwt.sign(
-                            { userId: user.id },
+                            {
+                                userId: user.id,
+                                isAdmin: user.isAdmin
+
+                            },
                             process.env.TOKEN,
                             { expiresIn: '24h' }
                         )
@@ -73,7 +77,6 @@ exports.modify = (req, res, next) => {
     let userUpdate = req.body;
     db.User.findOne({ where: { id: req.params.id } })
         .then((user) => {
-
             if (res.locals.user.userId === user.id) {
                 db.User.update(userUpdate, { where: { id: req.params.id } })
                     .then(() => res.status(200).json({ message: 'user has been modifed' }))

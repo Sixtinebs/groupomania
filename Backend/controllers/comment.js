@@ -20,7 +20,7 @@ exports.modifyComments = (req, res, next) => {
     let commentModify = req.body;
     db.Comment.findOne({ where: { id: req.query.id } })
         .then(comment => {
-            if (res.locals.user.userId === comment.user_id) {
+            if (res.locals.user.userId === comment.user_id || res.locals.user.isAdmin) {
                 db.Comment.update(commentModify, { where: { id: req.query.id } })
                     .then(() => res.status(200).json({ message: 'Comment has been modified' }))
                     .catch(error => res.status(500).json({ error }))
@@ -31,7 +31,7 @@ exports.modifyComments = (req, res, next) => {
 exports.deleteComments = (req, res, next) => {
     db.Comment.findOne({ where: { id: req.query.id } })
         .then(comment => {
-            if (res.locals.user.userId === comment.user_id) {
+            if (res.locals.user.userId === comment.user_id || res.locals.user.isAdmin) {
                 db.Comment.destroy({ where: { id: req.query.id } })
                     .then(() => {
                         res.status(204).json({ message: 'delete comment' })
