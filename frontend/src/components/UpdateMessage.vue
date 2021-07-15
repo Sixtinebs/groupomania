@@ -20,6 +20,15 @@
         minlength="1"
         required
       ></el-input>
+      <div>
+        <input
+          type="file"
+          ref="file"
+          id="image"
+          @change="selectFile"
+          accept="image/png, image/jpeg"
+        />
+      </div>
       <el-button
         type="success"
         icon="el-icon-check"
@@ -38,18 +47,22 @@ export default defineComponent({
     return {
       message: ref(""),
       title: ref(""),
+      image: ref(""),
     };
   },
   methods: {
+    selectFile() {
+      this.image = this.$refs.file.files[0];
+    },
     sendUpdateMessage: function () {
       let token = this.$store.state.userInfo.token;
-      let infoMessages = {
-        title: this.title,
-        message: this.message,
-      };
+      let formData = new FormData();
+      formData.append("title", this.title);
+      formData.append("message", this.message);
+      formData.append("image", this.image);
       let id = this.$route.params.id;
       messageService
-        .updateMessage(id, infoMessages, token)
+        .updateMessage(id, formData, token)
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
       this.$emit("updateMessage");

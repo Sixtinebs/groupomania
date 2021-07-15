@@ -33,9 +33,6 @@
         accept="image/png, image/jpeg"
       />
     </div>
-    <div v-else>
-      <img :src="image" />
-    </div>
 
     <el-button
       type="success"
@@ -66,21 +63,11 @@ export default {
     },
     sendMessage() {
       let formData = new FormData();
-
-      // let infoMessage = {
-      //   id: null,
-      //   user_id: this.$store.state.userInfo.userId,
-      //   title: this.title,
-      //   message: this.message,
-      //   createdAt: null,
-      //   updatedAt: null,
-      // };
       formData.append("title", this.title);
       formData.append("message", this.message);
       formData.append("image", this.image);
 
       let token = this.$store.state.userInfo.token;
-      console.log("formData", formData);
       messageService
         .createMessage(formData, token)
         .then((response) => console.log(response.data.message))
