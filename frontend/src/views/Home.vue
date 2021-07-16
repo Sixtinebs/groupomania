@@ -1,5 +1,6 @@
 <template>
-  <h1>Bonjour {{ user.userProfil.name }} !</h1>
+  <h1 v-if="user.userProfil.name"> Bonjour {{ user.userProfil.name  }} !</h1>
+  <h1 v-else>Bonjour </h1>
 
   <display-message />
 </template>

@@ -13,7 +13,10 @@
           >{{item.title}}</router-link>
           <p class="user-name">{{ item.User.name }}</p>
 
-          <update-message v-if="currentUpdateMessage == item.id" />
+          <update-message
+            v-if="currentUpdateMessage == item.id"
+            @update-message="getAllMessages"
+          />
           <el-button
             v-if="item.user_id == user.userProfil.id || user.userProfil.isAdmin"
             type="primary"
@@ -82,12 +85,14 @@ export default {
       let token = this.$store.state.userInfo.token;
       messageService
         .deleteMessage(id, token)
-        .then((response) => console.log(response))
+        .then((response) => response.status)
         .catch((error) => console.log(error));
       this.messages.splice(this.messages.indexOf(item), 1);
     },
   },
-
+  watch() {
+    this.getAllMessages();
+  },
   created() {
     this.getAllMessages();
   },

@@ -4,10 +4,6 @@
       type="primary"
       @click="editProfil"
     >Modifier</el-button>
-    <!-- <el-button
-      type="danger"
-      @click="removeProfil"
-    >Supprimer</el-button> -->
     <el-popover
       placement="top"
       :width="160"
@@ -78,10 +74,15 @@ export default {
     sendNewData() {
       let token = this.$store.state.userInfo.token;
       let id = this.$store.state.userInfo.userId;
-      let data = {
-        name: this.name,
-        email: this.email,
-      };
+      const data = {};
+      if (this.name) {
+        console.log(data);
+        data.name = this.name;
+      }
+      if (this.email) {
+        data.email = this.email;
+      }
+      console.log(data);
       userService
         .modifyUser(id, token, data)
         .then(() => {

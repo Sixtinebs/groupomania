@@ -33,7 +33,6 @@
         accept="image/png, image/jpeg"
       />
     </div>
-
     <el-button
       type="success"
       icon="el-icon-check"
@@ -58,9 +57,12 @@ export default {
   },
 
   methods: {
-    selectFile() {
-      this.image = this.$refs.file.files[0];
+    selectFile(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.image = files[0];
     },
+
     sendMessage() {
       let formData = new FormData();
       formData.append("title", this.title);

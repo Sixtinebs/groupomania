@@ -5,12 +5,10 @@ const fs = require('fs');
 exports.createMessage = (req, res, next) => {
     const infoMessage = req.body
     const userId = res.locals.user.userId
-    const imageName = req.file.filename
-
     const message = {
         ...infoMessage,
         user_id: userId,
-        image: (req.file ? `${req.protocol}://${req.get('host')}/images/${imageName}` : null)
+        image: (req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null)
     }
     console.log('message : ', message)
     db.Message.create(message)
@@ -62,11 +60,13 @@ exports.modifyMessage = (req, res, next) => {
     }
     db.Message.findOne({ where: { id: req.query.id } })
         .then(message => {
-            const image = message.image.split('/images/')[1];
             if (res.locals.user.userId === message.user_id || res.locals.user.isAdmin) {
+                if (message.image) {
+                    const image = message.image.split('/images/')[1];
+                    fs.unlinkSync(`images/${image}`);
+                }
                 db.Message.update(newMessage, { where: { id: req.query.id } })
                     .then(() => {
-                        fs.unlinkSync(`images/${image}`);
                         res.status(200).json({ message: 'Message modifié' })
                     })
                     .catch(error => res.status(500).json({ error }))
@@ -78,12 +78,14 @@ exports.modifyMessage = (req, res, next) => {
 exports.deleteMessage = (req, res, next) => {
     db.Message.findOne({ where: { id: req.query.id } })
         .then(message => {
-            const image = message.image.split('/images/')[1];
-
             if (res.locals.user.userId === message.user_id || res.locals.user.isAdmin) {
+                if (message.image) {
+                    let image = message.image.split('/images/')[1];
+                    fs.unlinkSync(`images/${image}`)
+                };
                 db.Message.destroy({ where: { id: req.query.id } })
                     .then(() => {
-                        fs.unlinkSync(`images/${image}`);
+
                         res.status(204).json({ message: 'Message supprimé ' })
                     })
                     .catch(error => res.status(500).json({ error }))

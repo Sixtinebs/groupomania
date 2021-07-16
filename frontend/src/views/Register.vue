@@ -69,7 +69,7 @@ export default {
     return {
       email: ref(""),
       name: ref(""),
-      password: "",
+      password: ref(""),
     };
   },
   computed: {

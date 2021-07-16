@@ -20,7 +20,7 @@
         minlength="1"
         required
       ></el-input>
-      <div>
+      <div v-if="!apercu">
         <input
           type="file"
           ref="file"
@@ -29,6 +29,7 @@
           accept="image/png, image/jpeg"
         />
       </div>
+
       <el-button
         type="success"
         icon="el-icon-check"
@@ -42,7 +43,7 @@
 import { defineComponent, ref } from "vue";
 import messageService from "../service/messageService";
 export default defineComponent({
-  emits: ["updateMessage"],
+  emits: ["updateMessage", "getAllMessages"],
   setup() {
     return {
       message: ref(""),
@@ -57,15 +58,23 @@ export default defineComponent({
     sendUpdateMessage: function () {
       let token = this.$store.state.userInfo.token;
       let formData = new FormData();
-      formData.append("title", this.title);
-      formData.append("message", this.message);
-      formData.append("image", this.image);
+      if (this.title) {
+        formData.append("title", this.title);
+      }
+      if (this.message) {
+        formData.append("message", this.message);
+      }
+      if (this.image) {
+        formData.append("image", this.image);
+      }
+      console.log(formData);
       let id = this.$route.params.id;
       messageService
         .updateMessage(id, formData, token)
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
       this.$emit("updateMessage");
+      this.$emit("getAllMessages");
       this.$router.push({
         name: "Home",
       });
@@ -75,4 +84,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+img {
+  width: 30%;
+  margin: auto;
+  display: block;
+  margin-bottom: 10px;
+}
 </style>
