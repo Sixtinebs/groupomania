@@ -9,6 +9,12 @@ cd Backend
 ```
 
 Renommer le fichier *.env.example* en *.env* et remplire les variables 
+OU créer un fichier *.env* avec les variables suivantes : 
+TOKEN=
+DB_NAME=
+DB_USER=
+DB_MDP=
+DB_HOST=
 
 ## Installer le projet
 
@@ -23,6 +29,11 @@ npm run start
 
 # frontend
 
+Depuis le dossier racine groupomania
+```
+cd frontend 
+```
+
 ## installer le project
 ```
 npm install
@@ -30,8 +41,7 @@ npm install
 
 ## Start project
 ````
-cd frontend
-npm run start
+npm run serve
 ````
 
 
