@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const messageControlleur = require('../controllers/message');
-const authentification = require('../middlewar/auth');
-const multer = require('../middlewar/multer')
+const authentification = require('../middleware/auth');
+const multer = require('../middleware/multer')
 
 router.get('/', authentification, messageControlleur.getAllMessages);
 router.get('/post/:id?', authentification, messageControlleur.getOneMessage)

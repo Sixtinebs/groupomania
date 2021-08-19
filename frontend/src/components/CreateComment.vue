@@ -1,7 +1,6 @@
 <template>
   <h2>Ecrire un commentaire</h2>
   <form>
-
     <el-input
       type="textarea"
       placeholder="Votre commentaire"
@@ -34,12 +33,12 @@ export default {
   emits: ["addComment"],
   methods: {
     sendComment() {
-      let comment = {
+      const comment = {
         comment: this.comment,
         user_id: this.$store.state.userInfo.userId,
         message_id: this.$route.params.id,
       };
-      let token = this.$store.state.userInfo.token;
+      const token = this.$store.state.userInfo.token;
       commentService
         .createComment(token, comment)
         .then(() => this.$emit("addComment"), (this.comment = ""))

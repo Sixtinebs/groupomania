@@ -1,8 +1,10 @@
 const { Sequelize } = require('sequelize');
+dotenv = require('dotenv').config();
 
-const dataBase = new Sequelize("groupomania", "root", "root", {
+
+const dataBase = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_MDP, {
     dialect: "mysql",
-    host: "localhost",
+    host: process.env.DB_HOST,
     port: 8889
 });
 

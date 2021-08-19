@@ -9,7 +9,7 @@ const commentsRoute = require('./routes/comment');
 const path = require('path');
 
 //.env
-require('dotenv').config();
+const dotenv = require('dotenv').config();
 
 const corsOptions = {
   origin: 'http://localhost:8080',

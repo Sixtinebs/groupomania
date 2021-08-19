@@ -20,8 +20,9 @@
         minlength="1"
         required
       ></el-input>
-      <div v-if="!apercu">
+      <div>
         <input
+          class="file"
           type="file"
           ref="file"
           id="image"
@@ -67,11 +68,10 @@ export default defineComponent({
       if (this.image) {
         formData.append("image", this.image);
       }
-      console.log(formData);
       let id = this.$route.params.id;
       messageService
         .updateMessage(id, formData, token)
-        .then((response) => console.log(response))
+        .then((response) => console.log(response.data.message))
         .catch((error) => console.log(error));
       this.$emit("updateMessage");
       this.$emit("getAllMessages");
@@ -88,6 +88,14 @@ img {
   width: 30%;
   margin: auto;
   display: block;
+  margin-bottom: 10px;
+}
+form {
+  margin: 0 20%;
+}
+.el-input,
+.el-textarea,
+.file {
   margin-bottom: 10px;
 }
 </style>

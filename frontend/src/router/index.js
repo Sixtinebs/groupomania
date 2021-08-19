@@ -11,7 +11,7 @@ import UpdateMessage from '@/components/UpdateMessage';
 
 
 function guardMyroute(to, from, next) {
-    var isAuthenticated = false;
+    let isAuthenticated = false;
     if (localStorage.getItem('user'))
         isAuthenticated = true;
     else

@@ -76,13 +76,11 @@ export default {
       let id = this.$store.state.userInfo.userId;
       const data = {};
       if (this.name) {
-        console.log(data);
         data.name = this.name;
       }
       if (this.email) {
         data.email = this.email;
       }
-      console.log(data);
       userService
         .modifyUser(id, token, data)
         .then(() => {

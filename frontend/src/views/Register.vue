@@ -91,10 +91,8 @@ export default {
   },
   methods: {
     addUser: function () {
-      console.log("ici");
       //for access element this
       const self = this;
-      console.log(this.email, this.password, this.name);
       //action trigger => dispatch
       this.$store
         .dispatch("addUser", {
@@ -102,7 +100,6 @@ export default {
           email: this.email,
           password: this.password,
           name: this.name,
-          //isAdmin: false,
           createdAt: null,
           updatedAt: null,
         })

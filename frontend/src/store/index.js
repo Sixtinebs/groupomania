@@ -22,7 +22,6 @@ if (!userInfo) {
             token: ''
         }
     }
-
 }
 let userProfil = localStorage.getItem('userProfil');
 userProfil = JSON.parse(userProfil)
@@ -43,11 +42,6 @@ const store = createStore({
             localStorage.setItem('user', JSON.stringify(userInfo));
         },
         GET_USER: function (state, user) {
-            // state.user.id = user.id;
-            // state.user.name = user.name;
-            // state.user.email = user.email;
-            // state.user.isAdmin = user.isAdmin;
-
             let userProfil = {
                 id: user.id,
                 name: user.name,
@@ -61,13 +55,11 @@ const store = createStore({
             state.userInfo = userInfo;
             localStorage.removeItem('user', JSON.stringify(userInfo));
         }
-
     },
     //fonction => Trigger a mutations
     actions: {
         addUser: ({ commit }, userInfo) => {
             //Commit a mutation
-            console.log({ userInfo })
             commit('SET_STATUS', 'loading')
             return new Promise((resolve, reject) => {
                 //set user info 
@@ -78,7 +70,6 @@ const store = createStore({
                         commit('CONNECT_USER', response.data);
                     })
                     .catch(function (error) {
-                        console.log('store')
                         reject(error);
                         commit('SET_STATUS', 'error_create');
                     });

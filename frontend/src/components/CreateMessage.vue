@@ -26,6 +26,7 @@
     </el-input>
     <div v-if="!image">
       <input
+        class="file"
         type="file"
         ref="file"
         id="image"
@@ -58,7 +59,7 @@ export default {
 
   methods: {
     selectFile(e) {
-      var files = e.target.files || e.dataTransfer.files;
+      const files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
       this.image = files[0];
     },
@@ -86,4 +87,12 @@ export default {
 </script>
 
 <style scoped>
+form {
+  margin: 0 20%;
+}
+.el-input,
+.el-textarea,
+.file {
+  margin-bottom: 10px;
+}
 </style>

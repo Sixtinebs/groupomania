@@ -10,7 +10,6 @@ exports.createMessage = (req, res, next) => {
         user_id: userId,
         image: (req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null)
     }
-    console.log('message : ', message)
     db.Message.create(message)
         .then(() => { res.status(201).json({ message: 'Message crée !' }) })
         .catch(error => { res.status(500).json({ error }) })
