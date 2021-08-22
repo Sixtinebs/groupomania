@@ -2,6 +2,7 @@
   <div>
     <el-button
       type="primary"
+      class="btn"
       @click="editProfil"
     >Modifier</el-button>
     <el-popover
@@ -25,6 +26,7 @@
       <template #reference>
         <el-button
           type="danger"
+          class="btn"
           @click="visible = true"
         >Supprimer</el-button>
       </template>
@@ -43,6 +45,7 @@
     <el-button
       type="success"
       icon="el-icon-check"
+      class="btn"
       @click="sendNewData"
     ></el-button>
   </div>
@@ -111,5 +114,6 @@ export default {
 <style scoped>
 #form-container {
   visibility: hidden;
+  margin: 40px 400px;
 }
 </style>

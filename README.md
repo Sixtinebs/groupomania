@@ -1,45 +1,40 @@
-#  clone
+#  Clone
 ```
 git clone https://github.com/Sixtinebs/groupomania.git && cd groupomania
 ```
 
-# Backend
+## Backend
 ```
 cd Backend
 ```
 
 Renommer le fichier *.env.example* en *.env* et remplire les variables 
-OU créer un fichier *.env* avec les variables suivantes : 
-TOKEN=
-DB_NAME=
-DB_USER=
-DB_MDP=
-DB_HOST=
 
-## Installer le projet
+
+### Installer le projet
 
 ```
 npm install
 ```
 
-## lancer le projet
+### lancer le projet
 ```
 npm run start
 ```
 
-# frontend
+## frontend
 
 Depuis le dossier racine groupomania
 ```
 cd frontend 
 ```
 
-## installer le project
+### installer le project
 ```
 npm install
 ```
 
-## Start project
+### Start project
 ````
 npm run serve
 ````

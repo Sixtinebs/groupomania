@@ -1,5 +1,5 @@
 <template>
-  <section class="component-login">
+  <section class="view-login">
     <h1>Connectez-vous !</h1>
     <form>
       <div>
@@ -98,5 +98,17 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
+/* .component-login {
+  background-color: #e2afde;
+  color: black;
+  border-radius: 0 20px 20px 0;
+}
+.component-login form {
+  padding: 20px;
+  border-radius: 15px;
+}
+.component-login form div {
+  margin: 20px 0;
+} */
 </style>

@@ -1,7 +1,6 @@
 <template>
-  <h1>Créer un compte Groupomania</h1>
-
-  <section>
+  <section class="view-login">
+    <h1>Créer un compte</h1>
     <form>
       <div>
         <label for="name">Nom</label>
@@ -116,5 +115,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

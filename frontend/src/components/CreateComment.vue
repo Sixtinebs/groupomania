@@ -16,6 +16,7 @@
     <el-button
       type="success"
       icon="el-icon-check"
+      class="btn"
       @click="sendComment"
     ></el-button>
   </form>

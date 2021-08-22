@@ -15,6 +15,7 @@
     > </el-input>
     <el-button
       type="success"
+      class="btn"
       icon="el-icon-check"
       @click="sendUpdateComment(token,commentId, {comment: comment})"
     ></el-button>
@@ -22,12 +23,14 @@
 
   <el-button
     type="primary"
+    class="btn"
     icon="el-icon-edit"
     circle
     @click="showHide()"
   ></el-button>
   <el-button
     type="danger"
+    class="btn"
     icon="el-icon-delete"
     circle
     @click="deleteComment(token, commentId)"

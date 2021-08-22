@@ -85,7 +85,8 @@ export default {
 .container-comment {
   text-align: left;
   padding: 20px;
-  background: #5f9ea030;
+  margin: -10px;
+  background-color: #d8f9f9;
   border-bottom: 1px solid #5f9ea0;
 }
 .comment-name {

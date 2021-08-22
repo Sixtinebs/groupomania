@@ -1,6 +1,5 @@
 <template>
-  <h1>Mon profil </h1>
-  <h2>Mes informations</h2>
+  <h1>Mes informations</h1>
   <p>Prénom : {{ user.userProfil.name}}</p>
   <p>Email : {{user.userProfil.email}}</p>
   <update-profil />

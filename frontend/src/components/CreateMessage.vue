@@ -5,8 +5,8 @@
     <el-input
       type="text"
       :rows="2"
-      placeholder="Votre message"
-      id="message"
+      placeholder="Votre titre"
+      id="title"
       name="message"
       minlength="1"
       required
@@ -34,8 +34,11 @@
         accept="image/png, image/jpeg"
       />
     </div>
+    <div>{{image.name}}</div>
+
     <el-button
       type="success"
+      class="btn"
       icon="el-icon-check"
       @click="sendMessage"
     ></el-button>

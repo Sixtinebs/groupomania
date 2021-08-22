@@ -11,6 +11,7 @@
             class="message-user"
             :id="'id-'+item.id"
           >{{item.title}}</router-link>
+          <p class="intro">{{item.message}}</p>
           <p class="user-name">{{ item.User.name }}</p>
 
           <update-message
@@ -20,6 +21,7 @@
           <el-button
             v-if="item.user_id == user.userProfil.id || user.userProfil.isAdmin"
             type="primary"
+            class="btn"
             icon="el-icon-edit"
             circle
             @click="updateMessage(item.id)"
@@ -28,6 +30,7 @@
             v-if="item.user_id == user.userProfil.id || user.userProfil.isAdmin"
             type="danger"
             icon="el-icon-delete"
+            class="btn"
             circle
             @click="deleteMessage(item.id, item)"
           ></el-button>
@@ -100,8 +103,20 @@ export default {
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+  display: block;
+  background-color: #e94326;
+  padding: 10px;
+  color: white;
+  font-weight: 900;
+  font-size: 20px;
+}
+
 .user-name {
   font-weight: bold;
+  text-align: right;
+  margin-right: 10px;
 }
 .container-post {
   display: flex;
@@ -110,15 +125,33 @@ export default {
 }
 .container-post div {
   width: 50%;
-  height: 120px;
   margin-bottom: 50px;
 }
 .post {
   margin: auto;
-  padding: 20px;
-  border: 2px solid rgb(84, 92, 100);
-  background-color: rgb(84 92 100 / 5%);
-  border-radius: 15px;
+  padding: 5px;
+
+  background-color: #f9d8d8;
+  color: black;
+}
+.intro {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.el-button--primary:hover {
+  color: white;
+}
+.el-button--primary {
+  color: white;
+}
+.el-button--danger {
+  color: white;
+}
+.el-button--danger:hover {
+  color: white;
 }
 @media screen and (max-width: 650px) {
   .container-post div {
