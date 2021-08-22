@@ -5,21 +5,26 @@
       <el-input
         type="text"
         :rows="2"
-        placeholder="Votre message"
-        id="message"
-        name="message"
+        placeholder="Votre title"
+        id="title"
+        name="title"
         minlength="1"
         required
         v-model="title"
+        :value="infoPost.title"
       >
       </el-input>
       <el-input
         type="textarea"
         placeholder="Entrez quelque chose"
-        v-model="message"
+        id="text"
+        name="text"
+        v-model="infoPost.message"
         minlength="1"
+        :value="infoPost.message"
         required
-      ></el-input>
+      >
+      </el-input>
       <div>
         <input
           class="file"
@@ -30,7 +35,6 @@
           accept="image/png, image/jpeg"
         />
       </div>
-
       <el-button
         type="success"
         icon="el-icon-check"
@@ -47,9 +51,10 @@ export default defineComponent({
   emits: ["updateMessage", "getAllMessages"],
   setup() {
     return {
-      message: ref(""),
+      text: ref(""),
       title: ref(""),
       image: ref(""),
+      infoPost: ref([]),
     };
   },
   methods: {
@@ -62,12 +67,13 @@ export default defineComponent({
       if (this.title) {
         formData.append("title", this.title);
       }
-      if (this.message) {
-        formData.append("message", this.message);
+      if (this.infoPost.message) {
+        formData.append("message", this.infoPost.message);
       }
       if (this.image) {
         formData.append("image", this.image);
       }
+      formData.append("user_id", this.infoPost.user_id);
       let id = this.$route.params.id;
       messageService
         .updateMessage(id, formData, token)
@@ -79,6 +85,17 @@ export default defineComponent({
         name: "Home",
       });
     },
+    getMessage() {
+      let token = this.$store.state.userInfo.token;
+      let id = this.$route.params.id;
+      messageService
+        .getOneMessage(id, token)
+        .then((response) => (this.infoPost = response.data.message))
+        .catch((error) => console.log(error));
+    },
+  },
+  created() {
+    this.getMessage();
   },
 });
 </script>

@@ -54,7 +54,7 @@ exports.modifyMessage = (req, res, next) => {
     const message = req.body
     const newMessage = {
         ...message,
-        user_id: userId,
+        user_id: req.body.user_id,
         image: (req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null)
     }
     db.Message.findOne({ where: { id: req.query.id } })

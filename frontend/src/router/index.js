@@ -82,12 +82,18 @@ const routes = [
         path: '/post/:id',
         beforeEnter: guardMyroute,
         component: Post,
+        meta: {
+            title: 'Article'
+        }
     },
     {
         name: 'ModifyPost',
         path: '/modifyPost/:id',
         beforeEnter: guardMyroute,
         component: UpdateMessage,
+        meta: {
+            title: 'Modifie mon article '
+        }
     }
 
 ];

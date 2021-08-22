@@ -13,7 +13,6 @@
           >{{item.title}}</router-link>
           <p class="intro">{{item.message}}</p>
           <p class="user-name">{{ item.User.name }}</p>
-
           <update-message
             v-if="currentUpdateMessage == item.id"
             @update-message="getAllMessages"
@@ -24,7 +23,7 @@
             class="btn"
             icon="el-icon-edit"
             circle
-            @click="updateMessage(item.id)"
+            @click="updateMessage(item.id, item.user_id)"
           ></el-button>
           <el-button
             v-if="item.user_id == user.userProfil.id || user.userProfil.isAdmin"
@@ -71,12 +70,12 @@ export default {
           console.log(error);
         });
     },
-    updateMessage(id) {
+    updateMessage(messageId) {
       // Find a good message for update
       for (const item of this.messages) {
-        if (item.id == id) {
+        if (item.id == messageId) {
           //Change variable
-          this.currentUpdateMessage = id;
+          this.currentUpdateMessage = messageId;
           this.$router.push({
             name: "ModifyPost",
             params: { id: this.currentUpdateMessage },
